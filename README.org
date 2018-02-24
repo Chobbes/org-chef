@@ -12,7 +12,7 @@
   #+BEGIN_SRC lisp
     (setq org-capture-templates
           '(("c" "Cookbook" entry (file "~/org/cookbook.org")
-             "%(chef-get-recipe-from-url)"
+             "%(org-chef-get-recipe-from-url)"
              :empty-lines 1)))
   #+END_SRC
 
@@ -25,4 +25,4 @@
 * Inserting at Point
 
   You can also insert a recipe at point using the command
-  ~chef-insert-recipe~.
+  ~org-chef-insert-recipe~.
