@@ -1,0 +1,28 @@
+* Introduction
+
+  org-chef is a package for managing recipes in org-mode. One of the
+  main features is that it can automatically extract recipes from
+  websites like allrecipes.com
+
+* Org-Capture
+
+  It's recommended that you set up an org-capture template to capture
+  recipes. Here is an example of that:
+
+  #+BEGIN_SRC lisp
+    (setq org-capture-templates
+          '(("c" "Cookbook" entry (file "~/org/cookbook.org")
+             "%(chef-get-recipe-from-url)"
+             :empty-lines 1)))
+  #+END_SRC
+
+  When capturing to the cookbook it will prompt you for a URL, you can
+  then paste a URL like the following into the mini-buffer, and it
+  will fill in as many details as it can:
+
+  http://allrecipes.com/recipe/85452/homemade-black-bean-veggie-burgers/
+
+* Inserting at Point
+
+  You can also insert a recipe at point using the command
+  ~chef-insert-recipe~.
