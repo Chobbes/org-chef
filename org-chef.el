@@ -6,8 +6,8 @@
 ;; URL: https://github.com/Chobbes/org-chef
 ;; Created: 2018
 ;; Version: 0.1
-;; Keywords: convenience, abbrev, outlines
-;; Package-Requires: ((elquery "0.1.0") (emacs "24"))
+;; Keywords: convenience, abbrev, outlines, org, food, recipes, cooking
+;; Package-Requires: ((elquery "0.1.0") (org "0") (emacs "24"))
 
 ;; Copyright 2018 Calvin Beck
 
@@ -111,7 +111,7 @@ This returns an alist with the following keys:
 
 The optional argument BULLET specifies which type of bullet point
 should be used."
-  (mapcar (lambda (x) (progn (insert-string (format "%s" x))
+  (mapcar (lambda (x) (progn (insert (format "%s" x))
                              (org-cycle)
                              (org-ctrl-c-minus)
                              (if bullet (org-cycle-list-bullet bullet))
@@ -122,7 +122,7 @@ should be used."
 (defun org-chef-recipe-insert-org (recipe)
   "Insert a RECIPE as an ‘org-mode’ heading."
   (org-insert-heading)
-  (insert-string (cdr (assoc 'name recipe)))
+  (insert (cdr (assoc 'name recipe)))
   (org-return)
   (org-set-property "source-url" (cdr (assoc 'source-url recipe)))
   (org-set-property "servings" (cdr (assoc 'servings recipe)))
@@ -130,14 +130,14 @@ should be used."
   (org-set-property "cook-time" (format "%s" (cdr (assoc 'cook-time recipe))))
   (org-set-property "ready-in" (format "%s" (cdr (assoc 'ready-in recipe))))
   (org-insert-subheading t)
-  (insert-string "Ingredients")
+  (insert "Ingredients")
   (org-return)
   (org-return)
   (insert-org-list (cdr (assoc 'ingredients recipe)))
   (org-return)
   (org-return)
   (org-insert-heading)
-  (insert-string "Directions")
+  (insert "Directions")
   (org-return)
   (org-return)
   (insert-org-list (cdr (assoc 'directions recipe)) "1."))
