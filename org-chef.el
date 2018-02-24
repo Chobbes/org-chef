@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2018  
 
-;; Author:  Calvin Beck
+;; Author:  Calvin Beck <hobbes@ualberta.ca>
 ;; Created: 2018
 ;; Version: 0.1
 ;; Keywords: convenience, abbrev, outlines
