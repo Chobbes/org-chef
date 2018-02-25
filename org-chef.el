@@ -1,6 +1,6 @@
 ;;; org-chef.el --- Cookbook and recipe management with org-mode.  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2018
+;; Copyright (C) 2018 Calvin Beck
 
 ;; Author:  Calvin Beck <hobbes@ualberta.ca>
 ;; URL: https://github.com/Chobbes/org-chef
@@ -40,83 +40,9 @@
 ;;; Code:
 
 
-(defun org-chef-remove-empty-strings (lst)
-  "Filter out any empty strings in a list of strings (LST)."
-  (seq-filter (lambda (x) (/= (length x) 0)) lst))
-
-
-(defun org-chef-all-recipes-extract-name (ast)
-  "Get the name of a recipe from an allrecipes elquery AST."
-  (car (mapcar 'elquery-text (elquery-$ "[itemprop=name]" ast))))
-
-
-(defun org-chef-all-recipes-extract-ingredients (ast)
-  "Get the ingredients for a recipe from an allrecipes elquery AST."
-  (reverse (mapcar 'elquery-text (elquery-$ "[itemprop=ingredients]" ast))))
-
-(defun org-chef-all-recipes-extract-servings (ast)
-  "Get the number of servings for a recipe from an allrecipes elquery AST."
-  (car (mapcar (lambda (node) (elquery-prop node "content")) (elquery-$ "[itemprop=recipeYield]" ast))))
-
-
-(defun org-chef-all-recipes-extract-prep-time (ast)
-  "Get the amount of prep-time for a recipe from an allrecipes elquery AST."
-  (mapcar (lambda (node) (mapcar 'elquery-text (elquery-children node))) (elquery-$ "[itemprop=prepTime]" ast)))
-
-
-(defun org-chef-all-recipes-extract-cook-time (ast)
-  "Get the amount of cook-time for a recipe from an allrecipes elquery AST."
-  (mapcar (lambda (node) (mapcar 'elquery-text (elquery-children node))) (elquery-$ "[itemprop=cookTime]" ast)))
-
-
-(defun org-chef-all-recipes-extract-ready-in (ast)
-  "Get the total amount of time for a recipe from an allrecipes elquery AST."
-  (mapcar (lambda (node) (mapcar 'elquery-text (elquery-children node))) (elquery-$ "[itemprop=totalTime]" ast)))
-
-
-(defun org-chef-all-recipes-extract-directions (ast)
-  "Get the directions for a recipe from an allrecipes elquery AST."
-  (reverse (org-chef-remove-empty-strings (mapcar 'elquery-text (elquery-$ "[class=recipe-directions__list--item]" ast)))))
-
-
-(defun org-chef-all-recipes-fetch (url)
-  "Given an allrecipes.com URL, retrieve the recipe information.
-
-This returns an alist with the following keys:
-
-- name
-- ingredients
-- servings
-- prep-time
-- cook-time
-- ready-in
-- directions
-- source-url"
-  (with-current-buffer (url-retrieve-synchronously url)
-    (let  ((ast (elquery-read-string (buffer-string))))
-      `((name . ,(org-chef-all-recipes-extract-name ast))
-        (ingredients . ,(org-chef-all-recipes-extract-ingredients ast))
-        (servings . ,(org-chef-all-recipes-extract-servings ast))
-        (prep-time . ,(org-chef-all-recipes-extract-prep-time ast))
-        (cook-time . ,(org-chef-all-recipes-extract-cook-time ast))
-        (ready-in . ,(org-chef-all-recipes-extract-ready-in ast))
-        (directions . ,(org-chef-all-recipes-extract-directions ast))
-        (source-url . ,url)))))
-
-
-
-
-(defun org-chef-insert-org-list (lst &optional bullet)
-  "Insert LST as an ‘org-mode’ plain list.
-
-The optional argument BULLET specifies which type of bullet point
-should be used."
-  (mapcar (lambda (x) (progn (insert (format "%s" x))
-                             (org-cycle)
-                             (org-ctrl-c-minus)
-                             (if bullet (org-cycle-list-bullet bullet))
-                             (org-return)))
-          lst))
+(require 'org-chef-utils)
+(require 'org-chef-all-recipes)
+(require 'org-chef-genius-kitchen)
 
 
 (defun org-chef-recipe-insert-org (recipe)
@@ -149,16 +75,29 @@ should be used."
                     (org-chef-recipe-insert-org recipe)
                     (buffer-string)))
 
+(defun org-chef-match-url (BASE URL)
+  "Match URL against a BASE url."
+  (not (null (string-match-p (regexp-quote BASE) URL))))
+
+
+(defun org-chef-fetch-recipe (URL)
+  "Look up a recipe at a URL."
+  (cond
+   ((org-chef-match-url "allrecipes.com" URL) (org-chef-all-recipes-fetch URL))
+   ((org-chef-match-url "geniuskitchen.com" URL) (org-chef-genius-kitchen-fetch URL))))
+
 
 (defun org-chef-insert-recipe ()
   "Prompt for a recipe URL, and then insert the recipe at point."
   (interactive)
-  (org-chef-recipe-insert-org (org-chef-all-recipes-fetch (read-string "Recipe URL: "))))
+  (let ((URL (read-string "Recipe URL: ")))
+    (org-chef-recipe-insert-org (org-chef-fetch-recipe (read-string "Recipe URL: ")))))
 
 
 (defun org-chef-get-recipe-from-url ()
   "Prompt for a recipe URL, and return the ‘org-mode’ string."
-  (org-chef-recipe-org-string (org-chef-all-recipes-fetch (read-string "Recipe URL: "))))
+  (let ((URL (read-string "Recipe URL: ")))
+    (org-chef-recipe-org-string (org-chef-fetch-recipe URL))))
 
 
 
