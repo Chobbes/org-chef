@@ -72,9 +72,6 @@
           (dom-by-class dom "^directions-item-text$")))
 
 
-(org-chef-martha-stewart-fetch "https://www.marthastewart.com/336864/baked-brie-with-pecans")
-
-
 (defun org-chef-martha-stewart-fetch (url)
   "Given an marthastewart.com URL, retrieve the recipe information.
 
