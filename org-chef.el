@@ -5,7 +5,7 @@
 ;; Author:  Calvin Beck <hobbes@ualberta.ca>
 ;; URL: https://github.com/Chobbes/org-chef
 ;; Created: 2018
-;; Version: 0.1
+;; Version: 0.1.1
 ;; Keywords: convenience, abbrev, outlines, org, food, recipes, cooking
 ;; Package-Requires: ((org "0") (emacs "24"))
 
@@ -44,6 +44,7 @@
 (require 'org-chef-all-recipes)
 (require 'org-chef-genius-kitchen)
 (require 'org-chef-simply-recipes)
+(require 'org-chef-martha-stewart)
 
 
 (defun org-chef-recipe-insert-org (recipe)
@@ -86,7 +87,8 @@
   (cond
    ((org-chef-match-url "allrecipes.com" URL) (org-chef-all-recipes-fetch URL))
    ((org-chef-match-url "geniuskitchen.com" URL) (org-chef-genius-kitchen-fetch URL))
-   ((org-chef-match-url "simplyrecipes.com" URL) (org-chef-simply-recipes-fetch URL))))
+   ((org-chef-match-url "simplyrecipes.com" URL) (org-chef-simply-recipes-fetch URL))
+   ((org-chef-match-url "marthastewart.com" URL) (org-chef-martha-stewart-fetch URL))))
 
 
 (defun org-chef-insert-recipe ()
