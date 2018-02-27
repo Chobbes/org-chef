@@ -39,28 +39,28 @@
 (require 'json)
 
 (defun org-chef-genius-kitchen-extract-name (ast)
-  "Get the name of a recipe from an allrecipes elquery AST."
+  "Get the name of a recipe from an geniuskitchen elquery AST."
   (cadddr (mapcar 'elquery-text (elquery-children (car (elquery-$ ".recipe-header" ast))))))
 
 
 (defun org-chef-genius-kitchen-extract-ingredients (ast)
-  "Get the ingredients for a recipe from an allrecipes elquery AST."
+  "Get the ingredients for a recipe from an geniuskitchen elquery AST."
   (let ((ingredients (elquery-prop (car (elquery-$ "[name=ingredient]" ast)) "value")))
     (append (json-read-from-string ingredients) nil)))
 
 
 (defun org-chef-genius-kitchen-extract-servings (ast)
-  "Get the number of servings for a recipe from an allrecipes elquery AST."
+  "Get the number of servings for a recipe from an geniuskitchen elquery AST."
   (elquery-text (car (elquery-$ ".count" (car (elquery-$ ".servings" ast))))))
 
 
 (defun org-chef-genius-kitchen-extract-ready-in (ast)
-  "Get the total amount of time for a recipe from an allrecipes elquery AST."
+  "Get the total amount of time for a recipe from an geniuskitchen elquery AST."
   (elquery-text (car (elquery-$ ".time" (car (elquery-$ ".recipe-facts" ast))))))
 
 
 (defun org-chef-genius-kitchen-extract-directions (ast)
-  "Get the directions for a recipe from an allrecipes elquery AST."
+  "Get the directions for a recipe from an geniuskitchen elquery AST."
   (let ((directions-list (cadddr (elquery-children (car (elquery-$ ".directions-inner" ast))))))
     (org-chef-remove-empty-strings (mapcar 'elquery-text (elquery-children directions-list)))))
 

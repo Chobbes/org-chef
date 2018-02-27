@@ -37,12 +37,13 @@
 
 (defun org-chef-all-recipes-extract-name (ast)
   "Get the name of a recipe from an allrecipes elquery AST."
-  (car (mapcar 'elquery-text (elquery-$ "[itemprop=name]" ast))))
+  (elquery-text (car (elquery-$ "[itemprop=name]" ast))))
 
 
 (defun org-chef-all-recipes-extract-ingredients (ast)
   "Get the ingredients for a recipe from an allrecipes elquery AST."
   (reverse (mapcar 'elquery-text (elquery-$ "[itemprop=ingredients]" ast))))
+
 
 (defun org-chef-all-recipes-extract-servings (ast)
   "Get the number of servings for a recipe from an allrecipes elquery AST."
