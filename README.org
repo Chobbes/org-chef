@@ -29,9 +29,10 @@
 
 * Supported Sites
 
-  The following websites should support recipe extraction
+  The following websites should support recipe extraction:
 
   - http://allrecipes.com/
   - http://www.geniuskitchen.com/
   - https://www.simplyrecipes.com/
   - https://www.marthastewart.com/
+  - https://www.budgetbytes.com/
