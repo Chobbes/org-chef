@@ -7,7 +7,7 @@
 ;; Created: 2018
 ;; Version: 0.1
 ;; Keywords: convenience, abbrev, outlines, org, food, recipes, cooking
-;; Package-Requires: ((elquery "0.1.0") (org "0") (emacs "24"))
+;; Package-Requires: ((org "0") (emacs "24"))
 
 ;; Copyright 2018 Calvin Beck
 

@@ -36,33 +36,35 @@
 
 
 (require 'org-chef-utils)
-(require 'json)
-
-(defun org-chef-genius-kitchen-extract-name (ast)
-  "Get the name of a recipe from an geniuskitchen elquery AST."
-  (cadddr (mapcar 'elquery-text (elquery-children (car (elquery-$ ".recipe-header" ast))))))
 
 
-(defun org-chef-genius-kitchen-extract-ingredients (ast)
-  "Get the ingredients for a recipe from an geniuskitchen elquery AST."
-  (let ((ingredients (elquery-prop (car (elquery-$ "[name=ingredient]" ast)) "value")))
-    (append (json-read-from-string ingredients) nil)))
+(defun org-chef-genius-kitchen-extract-name (dom)
+  "Get the name of a recipe from an geniuskitchen DOM."
+  (dom-text (caddr
+             (seq-filter (lambda (x) (not (stringp x)))
+                         (dom-children (car (dom-by-class dom "^recipe-header")))))))
 
 
-(defun org-chef-genius-kitchen-extract-servings (ast)
-  "Get the number of servings for a recipe from an geniuskitchen elquery AST."
-  (elquery-text (car (elquery-$ ".count" (car (elquery-$ ".servings" ast))))))
+(defun org-chef-genius-kitchen-extract-ingredients (dom)
+  "Get the ingredients for a recipe from an geniuskitchen DOM."
+  (mapcar #'dom-texts (dom-elements dom 'data-ingredient ".*")))
 
 
-(defun org-chef-genius-kitchen-extract-ready-in (ast)
-  "Get the total amount of time for a recipe from an geniuskitchen elquery AST."
-  (elquery-text (car (elquery-$ ".time" (car (elquery-$ ".recipe-facts" ast))))))
+(defun org-chef-genius-kitchen-extract-servings (dom)
+  "Get the number of servings for a recipe from an geniuskitchen DOM."
+  (dom-text (car (dom-by-class (car (dom-by-class dom "^servings$")) "count"))))
 
 
-(defun org-chef-genius-kitchen-extract-directions (ast)
-  "Get the directions for a recipe from an geniuskitchen elquery AST."
-  (let ((directions-list (cadddr (elquery-children (car (elquery-$ ".directions-inner" ast))))))
-    (org-chef-remove-empty-strings (mapcar 'elquery-text (elquery-children directions-list)))))
+(defun org-chef-genius-kitchen-extract-ready-in (dom)
+  "Get the total amount of time for a recipe from an geniuskitchen DOM."
+  (string-trim (dom-text (car (dom-by-class dom "time")))))
+
+
+(defun org-chef-genius-kitchen-extract-directions (dom)
+  "Get the directions for a recipe from an geniuskitchen DOM."
+  (let ((directions-list (dom-by-tag (car (dom-by-class dom "directions-inner")) 'li)))
+    (org-chef-remove-empty-strings
+     (mapcar #'(lambda (n) (string-trim (dom-text n))) directions-list))))
 
 
 (defun org-chef-genius-kitchen-fetch (url)
@@ -79,16 +81,18 @@ This returns an alist with the following keys:
 - directions
 - source-url"
   (with-current-buffer (url-retrieve-synchronously url)
-    (let  ((ast (elquery-read-string (buffer-string))))
-      `((name . ,(org-chef-genius-kitchen-extract-name ast))
-        (ingredients . ,(org-chef-genius-kitchen-extract-ingredients ast))
-        (servings . ,(org-chef-genius-kitchen-extract-servings ast))
+    (let  ((dom (libxml-parse-html-region (point-min) (point-max))))
+      `((name . ,(org-chef-genius-kitchen-extract-name dom))
+        (ingredients . ,(org-chef-genius-kitchen-extract-ingredients dom))
+        (servings . ,(org-chef-genius-kitchen-extract-servings dom))
         (prep-time . nil)
         (cook-time . nil)
-        (ready-in . ,(org-chef-genius-kitchen-extract-ready-in ast))
-        (directions . ,(org-chef-genius-kitchen-extract-directions ast))
+        (ready-in . ,(org-chef-genius-kitchen-extract-ready-in dom))
+        (directions . ,(org-chef-genius-kitchen-extract-directions dom))
         (source-url . ,url)))))
 
 
+(org-chef-genius-kitchen-fetch "http://www.geniuskitchen.com/recipe/tvp-vegan-sloppy-joes-220980")
+ 
 (provide 'org-chef-genius-kitchen)
 ;;; org-chef-genius-kitchen.el ends here
