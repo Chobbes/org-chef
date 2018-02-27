@@ -33,3 +33,4 @@
 
   - http://allrecipes.com/
   - http://www.geniuskitchen.com/
+  - https://www.simplyrecipes.com/
