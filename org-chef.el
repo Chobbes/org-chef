@@ -43,6 +43,7 @@
 (require 'org-chef-utils)
 (require 'org-chef-all-recipes)
 (require 'org-chef-genius-kitchen)
+(require 'org-chef-simply-recipes)
 
 
 (defun org-chef-recipe-insert-org (recipe)
@@ -84,7 +85,8 @@
   "Look up a recipe at a URL."
   (cond
    ((org-chef-match-url "allrecipes.com" URL) (org-chef-all-recipes-fetch URL))
-   ((org-chef-match-url "geniuskitchen.com" URL) (org-chef-genius-kitchen-fetch URL))))
+   ((org-chef-match-url "geniuskitchen.com" URL) (org-chef-genius-kitchen-fetch URL))
+   ((org-chef-match-url "simplyrecipes.com" URL) (org-chef-simply-recipes-fetch URL))))
 
 
 (defun org-chef-insert-recipe ()
@@ -98,7 +100,6 @@
   "Prompt for a recipe URL, and return the ‘org-mode’ string."
   (let ((URL (read-string "Recipe URL: ")))
     (org-chef-recipe-org-string (org-chef-fetch-recipe URL))))
-
 
 
 (provide 'org-chef)
