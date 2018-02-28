@@ -62,14 +62,14 @@
   (insert "Ingredients")
   (org-return)
   (org-return)
-  (insert-org-list (cdr (assoc 'ingredients recipe)))
+  (org-chef-insert-org-list (cdr (assoc 'ingredients recipe)))
   (org-return)
   (org-return)
   (org-insert-heading)
   (insert "Directions")
   (org-return)
   (org-return)
-  (insert-org-list (cdr (assoc 'directions recipe)) "1."))
+  (org-chef-insert-org-list (cdr (assoc 'directions recipe)) "1."))
 
 
 (defun org-chef-recipe-org-string (recipe)
