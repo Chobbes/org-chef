@@ -4,6 +4,37 @@
   main features is that it can automatically extract recipes from
   websites like allrecipes.com
 
+* Installation
+
+  I manage my packages via [[https://github.com/jwiegley/use-package][use-package]]. I have added this to my
+  ~.emacs~ file to install org-chef:
+
+  #+BEGIN_SRC elisp
+    (require 'package)
+
+    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+    (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") t)
+    (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+
+
+    (require 'use-package)
+
+
+    (use-package quelpa-use-package
+      :ensure t)
+
+
+    (use-package org-chef
+      :quelpa ((org-chef :fetcher github :repo "Chobbes/org-chef") :upgrade t)
+      :config
+
+      (require 'org-chef))
+  #+END_SRC
+
+  The package is currently being added to MELPA, but it's not there
+  yet, so I am using [[https://github.com/quelpa/quelpa][Quelpa]] to install the package from Github. You
+  can monitor the pull request for MELPA [[https://github.com/melpa/melpa/pull/5332][here]].
+
 * Org-Capture
 
   It's recommended that you set up an org-capture template to capture
@@ -18,7 +49,7 @@
 
   When capturing to the cookbook it will prompt you for a URL, you can
   then paste a URL like the following into the mini-buffer, and it
-  will fill in as many details as it can:
+  will fill in as many details as it can.
 
   http://allrecipes.com/recipe/85452/homemade-black-bean-veggie-burgers/
 
