@@ -93,7 +93,5 @@ This returns an alist with the following keys:
         (source-url . ,url)))))
 
 
-(org-chef-genius-kitchen-fetch "http://www.geniuskitchen.com/recipe/tvp-vegan-sloppy-joes-220980")
- 
 (provide 'org-chef-genius-kitchen)
 ;;; org-chef-genius-kitchen.el ends here
