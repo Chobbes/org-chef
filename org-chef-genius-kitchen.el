@@ -36,6 +36,7 @@
 
 
 (require 'org-chef-utils)
+(require 'dom)
 
 
 (defun org-chef-genius-kitchen-extract-name (dom)

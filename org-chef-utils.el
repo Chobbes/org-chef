@@ -40,6 +40,12 @@
   (seq-filter (lambda (x) (/= (length x) 0)) lst))
 
 
+(defun org-chef-dom-children (dom)
+  "Get the child nodes of the DOM, remove strings."
+  (seq-filter (lambda (x) (not (stringp x)))
+                                  (dom-children dom)))
+
+
 (defun org-chef-insert-org-list (lst &optional bullet)
   "Insert LST as an ‘org-mode’ plain list.
 

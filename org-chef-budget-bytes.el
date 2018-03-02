@@ -35,6 +35,10 @@
 ;;; Code:
 
 
+(require 'org-chef-utils)
+(require 'dom)
+
+
 (defun org-chef-budget-bytes-extract-name (dom)
   "Get the name of a recipe from an budgetbytes DOM."
   (dom-text (car (dom-by-class dom "^wprm-recipe-name$"))))

@@ -35,6 +35,10 @@
 ;;; Code:
 
 
+(require 'org-chef-utils)
+(require 'dom)
+
+
 (defun org-chef-all-recipes-extract-name (dom)
   "Get the name of a recipe from an allrecipes DOM."
   (dom-text (car (dom-by-class dom "^recipe-summary__h1$"))))

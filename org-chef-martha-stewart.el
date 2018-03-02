@@ -35,6 +35,10 @@
 ;;; Code:
 
 
+(require 'org-chef-utils)
+(require 'dom)
+
+
 (defun org-chef-martha-stewart-extract-name (dom)
   "Get the name of a recipe from an marthastewart DOM."
   (string-trim (dom-text (car (dom-by-class dom "^page-title$")))))
