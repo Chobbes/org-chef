@@ -47,6 +47,7 @@
 (require 'org-chef-martha-stewart)
 (require 'org-chef-budget-bytes)
 (require 'org-chef-cultures-for-health)
+(require 'org-chef-serious-eats)
 
 
 (defun org-chef-recipe-insert-org (recipe)
@@ -92,8 +93,8 @@
    ((org-chef-match-url "simplyrecipes.com" URL) (org-chef-simply-recipes-fetch URL))
    ((org-chef-match-url "marthastewart.com" URL) (org-chef-martha-stewart-fetch URL))
    ((org-chef-match-url "budgetbytes.com" URL) (org-chef-budget-bytes-fetch URL))
-   ((org-chef-match-url "culturesforhealth.com" URL) (org-chef-cultures-for-health-fetch URL))))
-
+   ((org-chef-match-url "culturesforhealth.com" URL) (org-chef-cultures-for-health-fetch URL))
+   ((org-chef-match-url "seriouseats.com" URL) (org-chef-serious-eats-fetch URL))))
 
 
 (defun org-chef-insert-recipe ()
