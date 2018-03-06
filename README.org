@@ -1,3 +1,5 @@
+[[./img/org-chef.png]]
+
 * Introduction
 
   org-chef is a package for managing recipes in org-mode. One of the
