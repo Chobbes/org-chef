@@ -91,3 +91,11 @@
   - https://www.budgetbytes.com/
   - https://www.culturesforhealth.com/
   - https://www.seriouseats.com/
+* Contributing
+
+  Contributions are very welcome! Feel free to open pull requests and
+  issues (and feel free to include a recipe that you like in it!)
+
+  If you find a site that you like that doesn't currently work with
+  org-chef, then you should definitely let us know through a GitHub
+  issue! Org-chef's goal is to support as many sites as possible.
