@@ -100,9 +100,7 @@
 (defun org-chef-insert-recipe ()
   "Prompt for a recipe URL, and then insert the recipe at point."
   (interactive)
-  (let ((URL (read-string "Recipe URL: ")))
-    (org-chef-recipe-insert-org (org-chef-fetch-recipe (read-string "Recipe URL: ")))))
-
+  (insert (org-chef-get-recipe-from-url)))
 
 (defun org-chef-get-recipe-from-url ()
   "Prompt for a recipe URL, and return the ‘org-mode’ string."
