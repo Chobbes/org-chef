@@ -47,6 +47,7 @@
 (require 'org-chef-martha-stewart)
 (require 'org-chef-budget-bytes)
 (require 'org-chef-cultures-for-health)
+(require 'org-chef-marmiton)
 (require 'org-chef-serious-eats)
 
 
@@ -94,6 +95,7 @@
    ((org-chef-match-url "marthastewart.com" URL) (org-chef-martha-stewart-fetch URL))
    ((org-chef-match-url "budgetbytes.com" URL) (org-chef-budget-bytes-fetch URL))
    ((org-chef-match-url "culturesforhealth.com" URL) (org-chef-cultures-for-health-fetch URL))
+   ((org-chef-match-url "marmiton.org" URL) (org-chef-marmiton-fetch URL))
    ((org-chef-match-url "seriouseats.com" URL) (org-chef-serious-eats-fetch URL))))
 
 
