@@ -91,6 +91,7 @@
   - https://www.budgetbytes.com/
   - https://www.culturesforhealth.com/
   - https://www.seriouseats.com/
+  - http://www.marmiton.org (french)
 * Contributing
 
   Contributions are very welcome! Feel free to open pull requests and
