@@ -49,6 +49,7 @@
 (require 'org-chef-cultures-for-health)
 (require 'org-chef-marmiton)
 (require 'org-chef-serious-eats)
+(require 'org-chef-reluctant-gourmet)
 
 
 (defun org-chef-recipe-insert-org (recipe)
@@ -96,7 +97,8 @@
    ((org-chef-match-url "budgetbytes.com" URL) (org-chef-budget-bytes-fetch URL))
    ((org-chef-match-url "culturesforhealth.com" URL) (org-chef-cultures-for-health-fetch URL))
    ((org-chef-match-url "marmiton.org" URL) (org-chef-marmiton-fetch URL))
-   ((org-chef-match-url "seriouseats.com" URL) (org-chef-serious-eats-fetch URL))))
+   ((org-chef-match-url "seriouseats.com" URL) (org-chef-serious-eats-fetch URL))
+   ((org-chef-match-url "reluctantgourmet.com" URL) (org-chef-reluctant-gourmet-fetch URL))))
 
 
 (defun org-chef-insert-recipe ()

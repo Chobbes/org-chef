@@ -92,6 +92,8 @@
   - https://www.culturesforhealth.com/
   - https://www.seriouseats.com/
   - http://www.marmiton.org (french)
+  - https://www.reluctantgourmet.com/thanksgiving-stuffing-waffle-with-fried-egg/
+
 * Contributing
 
   Contributions are very welcome! Feel free to open pull requests and
