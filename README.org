@@ -91,8 +91,8 @@
   - https://www.budgetbytes.com/
   - https://www.culturesforhealth.com/
   - https://www.seriouseats.com/
-  - http://www.marmiton.org (french)
-  - https://www.reluctantgourmet.com/thanksgiving-stuffing-waffle-with-fried-egg/
+  - http://www.marmiton.org/ (french)
+  - https://www.reluctantgourmet.com/
 
 * Contributing
 
