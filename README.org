@@ -93,6 +93,7 @@
   - https://www.seriouseats.com/
   - http://www.marmiton.org/ (french)
   - https://www.reluctantgourmet.com/
+  - https://www.chefkoch.de/
 
 * Contributing
 
