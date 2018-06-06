@@ -103,11 +103,10 @@
    ((org-chef-match-url "chefkoch.de" URL) (org-chef-chef-koch-fetch URL))))
 
 
-(defun org-chef-insert-recipe ()
+(defun org-chef-insert-recipe (URL)
   "Prompt for a recipe URL, and then insert the recipe at point."
-  (interactive)
-  (let ((URL (read-string "Recipe URL: ")))
-    (org-chef-recipe-insert-org (org-chef-fetch-recipe (read-string "Recipe URL: ")))))
+  (interactive "sRecipe URL: ")
+  (org-chef-recipe-insert-org (org-chef-fetch-recipe URL)))
 
 
 (defun org-chef-get-recipe-from-url ()
