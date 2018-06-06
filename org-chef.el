@@ -51,6 +51,7 @@
 (require 'org-chef-serious-eats)
 (require 'org-chef-reluctant-gourmet)
 (require 'org-chef-chef-koch)
+(require 'org-chef-steamy-kitchen)
 
 
 (defun org-chef-recipe-insert-org (recipe)
@@ -83,6 +84,7 @@
                     (org-chef-recipe-insert-org recipe)
                     (buffer-string)))
 
+
 (defun org-chef-match-url (BASE URL)
   "Match URL against a BASE url."
   (not (null (string-match-p (regexp-quote BASE) URL))))
@@ -100,7 +102,8 @@
    ((org-chef-match-url "marmiton.org" URL) (org-chef-marmiton-fetch URL))
    ((org-chef-match-url "seriouseats.com" URL) (org-chef-serious-eats-fetch URL))
    ((org-chef-match-url "reluctantgourmet.com" URL) (org-chef-reluctant-gourmet-fetch URL))
-   ((org-chef-match-url "chefkoch.de" URL) (org-chef-chef-koch-fetch URL))))
+   ((org-chef-match-url "chefkoch.de" URL) (org-chef-chef-koch-fetch URL))
+   ((org-chef-match-url "steamykitchen.com" URL) (org-chef-steamy-kitchen-fetch URL))))
 
 
 (defun org-chef-insert-recipe (URL)
