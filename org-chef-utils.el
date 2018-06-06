@@ -30,7 +30,7 @@
 
 ;;; Commentary:
 
-;; Utilitiy functions for org-chef.
+;; Utility functions for org-chef.
 
 ;;; Code:
 
