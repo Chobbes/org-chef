@@ -46,7 +46,7 @@
 
 (defun org-chef-serious-eats-extract-ingredients (dom)
   "Get the ingredients for a recipe from an seriouseats DOM."
-  (mapcar 'dom-texts (dom-elements dom 'itemprop "^ingredients$")))
+  (mapcar 'dom-texts (dom-elements dom 'itemprop "^recipeIngredient$")))
 
 
 (defun org-chef-serious-eats-extract-servings (dom)
