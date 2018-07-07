@@ -87,7 +87,7 @@
 
 (defun org-chef-budget-bytes-extract-directions (dom)
   "Get the directions for a recipe from an budgetbytes DOM."
-  (mapcar #'(lambda (n) (string-trim (dom-texts (dom-children n))))
+  (mapcar #'(lambda (n) (string-trim (dom-texts n)))
           (dom-by-class dom "wprm-recipe-instruction-text")))
 
 
