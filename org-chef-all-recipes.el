@@ -46,7 +46,7 @@
 
 (defun org-chef-all-recipes-extract-ingredients (dom)
   "Get the ingredients for a recipe from an allrecipes DOM."
-  (mapcar #'(lambda (n) (string-trim (dom-text n))) (dom-elements dom 'itemprop "^ingredients$")))
+  (mapcar #'(lambda (n) (string-trim (dom-text n))) (dom-elements dom 'itemprop "^recipeIngredient$")))
 
 
 (defun org-chef-all-recipes-extract-servings (dom)
