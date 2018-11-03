@@ -33,7 +33,7 @@
           '(("c" "Cookbook" entry (file "~/org/cookbook.org")
              "%(org-chef-get-recipe-from-url)"
              :empty-lines 1)
-             ("m" "Manual Cookbook" entry (file "~/org/cookbook.org")
+            ("m" "Manual Cookbook" entry (file "~/org/cookbook.org")
              "* %^{Recipe title: }\n  :PROPERTIES:\n  :source-url:\n  :servings:\n  :prep-time:\n  :cook-time:\n  :ready-in:\n  :END:\n** Ingredients\n   %?\n** Directions\n\n")))
   #+END_SRC
 
@@ -73,9 +73,10 @@
        4. In a small bowl, stir together egg, chili powder, cumin, and chili sauce.
        5. Stir the egg mixture into the mashed beans. Mix in bread crumbs until the mixture is sticky and holds together. Divide mixture into four patties.
        6. If grilling, place patties on foil, and grill about 8 minutes on each side. If baking, place patties on baking sheet, and bake about 10 minutes on each side.
-
-
   #+END_SRC
+
+  Additionally there is a capture template in there for manually
+  entering a recipe, if you so desire!
 
 * Inserting at Point
 
