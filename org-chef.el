@@ -120,5 +120,11 @@
     (org-chef-recipe-org-string (org-chef-fetch-recipe URL))))
 
 
+;; Org-capture templates.
+(setq
+ org-chef-url-capture "%(org-chef-get-recipe-from-url)"
+ org-chef-manual-capture "* %^{Recipe title: }\n  :PROPERTIES:\n  :source-url:\n  :servings:\n  :prep-time:\n  :cook-time:\n  :ready-in:\n  :END:\n** Ingredients\n   %?\n** Directions\n\n")
+
+
 (provide 'org-chef)
 ;;; org-chef.el ends here
