@@ -99,6 +99,7 @@
   - https://www.chefkoch.de/
   - https://steamykitchen.com/
   - https://showmetheyummy.com/
+  - https://nytimes.com/
 
 * Contributing
 
