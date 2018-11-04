@@ -53,6 +53,7 @@
 (require 'org-chef-chef-koch)
 (require 'org-chef-steamy-kitchen)
 (require 'org-chef-show-me-the-yummy)
+(require 'org-chef-nytimes)
 
 
 (defun org-chef-recipe-insert-org (recipe)
@@ -105,7 +106,8 @@
    ((org-chef-match-url "reluctantgourmet.com" URL) (org-chef-reluctant-gourmet-fetch URL))
    ((org-chef-match-url "chefkoch.de" URL) (org-chef-chef-koch-fetch URL))
    ((org-chef-match-url "steamykitchen.com" URL) (org-chef-steamy-kitchen-fetch URL))
-   ((org-chef-match-url "showmetheyummy.com" URL) (org-chef-show-me-the-yummy-fetch URL))))
+   ((org-chef-match-url "showmetheyummy.com" URL) (org-chef-show-me-the-yummy-fetch URL))
+   ((org-chef-match-url "nytimes.com" URL) (org-chef-nytimes-fetch URL))))
 
 
 (defun org-chef-insert-recipe (URL)
