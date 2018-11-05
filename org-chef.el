@@ -52,7 +52,7 @@
 (require 'org-chef-reluctant-gourmet)
 (require 'org-chef-chef-koch)
 (require 'org-chef-steamy-kitchen)
-(require 'org-chef-show-me-the-yummy)
+(require 'org-chef-wordpress)
 
 
 (defun org-chef-recipe-insert-org (recipe)
@@ -91,8 +91,8 @@
   (not (null (string-match-p (regexp-quote BASE) URL))))
 
 
-(defun org-chef-fetch-recipe (URL)
-  "Look up a recipe at a URL."
+(defun org-chef-fetch-recipe-specific-url (URL)
+  "Look up a recipe based on a specific URL."
   (cond
    ((org-chef-match-url "allrecipes.com" URL) (org-chef-all-recipes-fetch URL))
    ((org-chef-match-url "geniuskitchen.com" URL) (org-chef-genius-kitchen-fetch URL))
@@ -105,7 +105,15 @@
    ((org-chef-match-url "reluctantgourmet.com" URL) (org-chef-reluctant-gourmet-fetch URL))
    ((org-chef-match-url "chefkoch.de" URL) (org-chef-chef-koch-fetch URL))
    ((org-chef-match-url "steamykitchen.com" URL) (org-chef-steamy-kitchen-fetch URL))
-   ((org-chef-match-url "showmetheyummy.com" URL) (org-chef-show-me-the-yummy-fetch URL))))
+   (t nil)))
+
+
+(defun org-chef-fetch-recipe (URL)
+  "Look up a recipe at a URL."
+  (let ((fetched-recipe (org-chef-fetch-recipe-specific-url URL)))
+    (if fetched-recipe
+        fetched-recipe
+      (org-chef-wordpress-fetch URL))))
 
 
 (defun org-chef-insert-recipe (URL)
@@ -118,12 +126,6 @@
   "Prompt for a recipe URL, and return the ‘org-mode’ string."
   (let ((URL (read-string "Recipe URL: ")))
     (org-chef-recipe-org-string (org-chef-fetch-recipe URL))))
-
-
-;; Org-capture templates.
-(setq
- org-chef-url-capture "%(org-chef-get-recipe-from-url)"
- org-chef-manual-capture "* %^{Recipe title: }\n  :PROPERTIES:\n  :source-url:\n  :servings:\n  :prep-time:\n  :cook-time:\n  :ready-in:\n  :END:\n** Ingredients\n   %?\n** Directions\n\n")
 
 
 (provide 'org-chef)
