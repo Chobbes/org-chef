@@ -52,6 +52,7 @@
 (require 'org-chef-reluctant-gourmet)
 (require 'org-chef-chef-koch)
 (require 'org-chef-steamy-kitchen)
+(require 'org-chef-nytimes)
 (require 'org-chef-wordpress)
 
 
@@ -105,6 +106,7 @@
    ((org-chef-match-url "reluctantgourmet.com" URL) (org-chef-reluctant-gourmet-fetch URL))
    ((org-chef-match-url "chefkoch.de" URL) (org-chef-chef-koch-fetch URL))
    ((org-chef-match-url "steamykitchen.com" URL) (org-chef-steamy-kitchen-fetch URL))
+   ((org-chef-match-url "nytimes.com" URL) (org-chef-nytimes-fetch URL)))
    (t nil)))
 
 
