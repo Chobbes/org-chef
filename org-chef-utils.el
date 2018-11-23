@@ -52,8 +52,9 @@
 
 The optional argument BULLET specifies which type of bullet point
 should be used."
-  (mapcar (lambda (x) (progn (insert (format "%s" x))
+  (mapcar (lambda (x) (progn (insert (format "%s " (string-trim x)))
                              (org-cycle)
+                             (org-delete-backward-char 1)
                              (org-ctrl-c-minus)
                              (if bullet (org-cycle-list-bullet bullet))
                              (org-return)))
