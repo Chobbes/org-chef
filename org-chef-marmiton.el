@@ -39,13 +39,13 @@
 (require 'dom)
 
 
-(defun sanitize (str)
+(defun org-chef-marmiton-sanitize (str)
   "Sanitize the STR by removing beginning/trailing spaces extracted from a marmiton dom."
   (replace-regexp-in-string "^[ 	\r\n]*\\(.*[^ 	\r\n]\\)[ 	\r\n]*$" "\\1" str))
 
-(defun extract-dom-text (dom)
+(defun org-chef-marmiton-extract-dom-text (dom)
   "Embedded the operation santize of dom-text from a marmiton DOM."
-  (sanitize (dom-text dom)))
+  (org-chef-marmiton-sanitize (dom-texts dom)))
 
 (defun org-chef-marmiton-extract-name (dom)
   "Get the name of a recipe from a marmiton DOM."
@@ -54,9 +54,9 @@
 (defun org-chef-marmiton-extract-current-ingredient (dom)
   "Extract element for the current ingredient from a marmiton DOM."
   (concat
-   (extract-dom-text (dom-elements dom 'class "^recipe-ingredient-qt$"))
+   (org-chef-marmiton-extract-dom-text (dom-elements dom 'class "^recipe-ingredient-qt$"))
    " "
-   (extract-dom-text (dom-elements dom 'class "^ingredient$"))))
+   (org-chef-marmiton-extract-dom-text (dom-elements dom 'class "^ingredient$"))))
 
 (defun org-chef-marmiton-extract-ingredients (dom)
   "Get the ingredients for a recipe from a marmiton DOM."
@@ -65,17 +65,18 @@
 (defun org-chef-marmiton-extract-directions (dom)
   "Get the directions for a recipe from a marmiton DOM."
 
-  (mapcar 'extract-dom-text (dom-elements dom 'class "^recipe-preparation__list__item$")))
+  (mapcar (lambda (x) (org-chef-marmiton-extract-dom-text (cddr x)))
+          (dom-elements dom 'class "^recipe-preparation__list__item$")))
 
 (defun org-chef-marmiton-extract-prep-time (dom)
   "Get the preparation time for a recipe from a marmiton DOM."
-  (extract-dom-text
+  (org-chef-marmiton-extract-dom-text
    (dom-elements (dom-elements dom 'class "recipe-infos__timmings__preparation")
 		 'class "^recipe-infos__timmings__value$")))
 
 (defun org-chef-marmiton-extract-cook-time (dom)
   "Extract the cooking time for a recipe from a marmiton DOM."
-  (extract-dom-text
+  (org-chef-marmiton-extract-dom-text
    (dom-elements (dom-elements dom 'class "recipe-infos__timmings__cooking")
 		 'class "^recipe-infos__timmings__value$")))
 
