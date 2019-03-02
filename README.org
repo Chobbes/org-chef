@@ -100,6 +100,7 @@
   - https://steamykitchen.com/
   - https://showmetheyummy.com/
   - https://nytimes.com/
+  - http://www.xiachufang.com/ (下厨房 Chinese)
   - Any recipe site based on wordpress
 
 * Contributing

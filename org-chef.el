@@ -53,6 +53,8 @@
 (require 'org-chef-chef-koch)
 (require 'org-chef-steamy-kitchen)
 (require 'org-chef-nytimes)
+(require 'org-chef-saveur)
+(require 'org-chef-xiachufang)
 (require 'org-chef-wordpress)
 
 
@@ -107,6 +109,8 @@
    ((org-chef-match-url "chefkoch.de" URL) (org-chef-chef-koch-fetch URL))
    ((org-chef-match-url "steamykitchen.com" URL) (org-chef-steamy-kitchen-fetch URL))
    ((org-chef-match-url "nytimes.com" URL) (org-chef-nytimes-fetch URL))
+   ((org-chef-match-url "saveur.com" URL) (org-chef-saveur-fetch URL))
+   ((org-chef-match-url "xiachufang.com" URL) (org-chef-xiachufang-fetch URL))
    (t nil)))
 
 
