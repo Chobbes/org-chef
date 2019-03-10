@@ -41,12 +41,12 @@
 
 (defun org-chef-serious-eats-extract-name (dom)
   "Get the name of a recipe from an seriouseats DOM."
-  (dom-text (car (dom-elements dom 'itemprop "^name$"))))
+  (dom-text (car (dom-elements dom 'class "^recipe-title$"))))
 
 
 (defun org-chef-serious-eats-extract-ingredients (dom)
   "Get the ingredients for a recipe from an seriouseats DOM."
-  (mapcar 'dom-texts (dom-elements dom 'itemprop "^recipeIngredient$")))
+  (mapcar 'dom-texts (dom-elements dom 'class "^ingredient$")))
 
 
 (defun org-chef-serious-eats-extract-servings (dom)
@@ -107,7 +107,6 @@ This returns an alist with the following keys:
         (ready-in . ,(org-chef-serious-eats-extract-ready-in dom))
         (directions . ,(org-chef-serious-eats-extract-directions dom))
         (source-url . ,url)))))
-
 
 (provide 'org-chef-serious-eats)
 ;;; org-chef-serious-eats.el ends here
