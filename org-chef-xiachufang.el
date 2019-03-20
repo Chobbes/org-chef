@@ -38,23 +38,26 @@
 (require 'org-chef-utils)
 (require 'dom)
 
+(defun org-chef-xiachufang-sanitize (str)
+  "Sanitize the STR by removing beginning/trailing spaces extracted from a marmiton dom."
+  (replace-regexp-in-string "^[ 	\r\n]*\\(.*[^ 	\r\n]\\)[ 	\r\n]*$" "\\1" str))
 
 (defun org-chef-xiachufang-extract-name (dom)
   "Get the name of a recipe from a xiachufang DOM."
-  (sanitize (dom-text (car (dom-elements dom 'class "^page-title$")))))
+  (org-chef-xiachufang-sanitize (dom-text (car (dom-elements dom 'class "^page-title$")))))
 
 
 (defun org-chef-xiachufang-extract-ingredients (dom)
   "Get the ingredients for a recipe from a xiachufang DOM."
   (mapcar #'(lambda (n)
-              (replace-regexp-in-string "\n" " " (sanitize (dom-texts n))))
+              (replace-regexp-in-string "\n" " " (org-chef-xiachufang-sanitize (dom-texts n))))
           (dom-elements dom 'itemprop "^recipeIngredient$")))
 
 
 (defun org-chef-xiachufang-extract-directions (dom)
   "Get the directions for a recipe from a xiachufang DOM."
   (mapcar #'(lambda (n)
-              (replace-regexp-in-string "\n" " " (sanitize (dom-texts n))))
+              (replace-regexp-in-string "\n" " " (org-chef-xiachufang-sanitize (dom-texts n))))
           (dom-elements dom 'itemprop "^recipeInstructions$")))
 
 
