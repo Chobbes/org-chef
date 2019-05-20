@@ -41,29 +41,27 @@
 
 (defun org-chef-genius-kitchen-extract-name (dom)
   "Get the name of a recipe from an geniuskitchen DOM."
-  (dom-text (caddr
-             (seq-filter (lambda (x) (not (stringp x)))
-                         (dom-children (car (dom-by-class dom "^recipe-header")))))))
+  (dom-texts (dom-by-class dom "^recipe-title$")))
 
 
 (defun org-chef-genius-kitchen-extract-ingredients (dom)
   "Get the ingredients for a recipe from an geniuskitchen DOM."
-  (mapcar #'dom-texts (dom-elements dom 'data-ingredient ".*")))
+  (mapcar #'dom-texts (dom-by-class dom "^recipe-ingredients__ingredient$")))
 
 
 (defun org-chef-genius-kitchen-extract-servings (dom)
   "Get the number of servings for a recipe from an geniuskitchen DOM."
-  (dom-text (car (dom-by-class (car (dom-by-class dom "^servings$")) "count"))))
+  (dom-texts (dom-by-class (car (dom-by-class dom "recipe-facts__yield")) "theme-color")))
 
 
 (defun org-chef-genius-kitchen-extract-ready-in (dom)
   "Get the total amount of time for a recipe from an geniuskitchen DOM."
-  (string-trim (dom-text (car (dom-by-class dom "time")))))
+  (dom-texts (cddddr (car (dom-by-class dom "recipe-facts__time")))))
 
 
 (defun org-chef-genius-kitchen-extract-directions (dom)
   "Get the directions for a recipe from an geniuskitchen DOM."
-  (let ((directions-list (dom-by-tag (car (dom-by-class dom "directions-inner")) 'li)))
+  (let ((directions-list (dom-by-tag (car (dom-by-class dom "recipe-directions__step")) 'li)))
     (org-chef-remove-empty-strings
      (mapcar #'(lambda (n) (string-trim (dom-text n))) directions-list))))
 
