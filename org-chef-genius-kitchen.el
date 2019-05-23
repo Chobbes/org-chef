@@ -79,7 +79,7 @@ This returns an alist with the following keys:
 - ready-in
 - directions
 - source-url"
-  (with-current-buffer (url-retrieve-synchronously url)
+  (with-current-buffer (org-chef-url-retrieve-synchronously url)
     (let  ((dom (libxml-parse-html-region (point-min) (point-max))))
       `((name . ,(org-chef-genius-kitchen-extract-name dom))
         (ingredients . ,(org-chef-genius-kitchen-extract-ingredients dom))

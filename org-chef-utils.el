@@ -61,5 +61,18 @@ should be used."
           lst))
 
 
+(defun org-chef-url-retrieve-synchronously (url)
+  "Fetch URL using url-retrieve-synchronously.
+
+This is a wrapper for url-retrieve-synchronously, which primarily serves to implement workarounds."
+
+  (let ((gnutls-algorithm-priority
+              (if org-chef-fetch-workaround
+                  "NORMAL:-VERS-TLS1.3"
+                gnutls-algorithm-priority)))
+
+    (url-retrieve-synchronously url)))
+
+
 (provide 'org-chef-utils)
 ;;; org-chef-utils.el ends here

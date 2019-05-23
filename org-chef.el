@@ -45,7 +45,6 @@
 (require 'org-chef-genius-kitchen)
 (require 'org-chef-simply-recipes)
 (require 'org-chef-martha-stewart)
-(require 'org-chef-budget-bytes)
 (require 'org-chef-cultures-for-health)
 (require 'org-chef-marmiton)
 (require 'org-chef-serious-eats)
@@ -57,6 +56,13 @@
 (require 'org-chef-xiachufang)
 (require 'org-chef-wordpress)
 
+
+(defvar org-chef-fetch-workaround
+  (and (< emacs-major-version 27) 't)
+  "Inspired by  https://github.com/magit/ghub/blob/6f1074b780131638b28cc76c8aa02f0dba0713f0/ghub.el
+
+See https://github.com/magit/ghub/issues/81 and https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341
+for more information.")
 
 (defun org-chef-recipe-insert-org (recipe)
   "Insert a RECIPE as an ‘org-mode’ heading."
@@ -101,7 +107,6 @@
    ((org-chef-match-url "geniuskitchen.com" URL) (org-chef-genius-kitchen-fetch URL))
    ((org-chef-match-url "simplyrecipes.com" URL) (org-chef-simply-recipes-fetch URL))
    ((org-chef-match-url "marthastewart.com" URL) (org-chef-martha-stewart-fetch URL))
-   ((org-chef-match-url "budgetbytes.com" URL) (org-chef-budget-bytes-fetch URL))
    ((org-chef-match-url "culturesforhealth.com" URL) (org-chef-cultures-for-health-fetch URL))
    ((org-chef-match-url "marmiton.org" URL) (org-chef-marmiton-fetch URL))
    ((org-chef-match-url "seriouseats.com" URL) (org-chef-serious-eats-fetch URL))

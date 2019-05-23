@@ -94,9 +94,9 @@ This returns an alist with the following keys:
 - source-url
 
 If this is not a wordpress site, then return nil."
-  (with-current-buffer (url-retrieve-synchronously url)
-    (let  ((dom (libxml-parse-html-region (point-min) (point-max))))
+  (with-current-buffer (org-chef-url-retrieve-synchronously url)
 
+    (let  ((dom (libxml-parse-html-region (point-min) (point-max))))
       (if (org-chef-is-wordpress-p dom)
           `((name . ,(org-chef-wordpress-extract-name dom))
             (ingredients . ,(org-chef-wordpress-extract-ingredients dom))
