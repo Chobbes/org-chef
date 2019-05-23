@@ -101,6 +101,7 @@
   - https://showmetheyummy.com/
   - https://nytimes.com/
   - http://www.xiachufang.com/ (下厨房 Chinese)
+  - https://www.finecooking.com/
   - Any recipe site based on wordpress
 
 * Contributing
