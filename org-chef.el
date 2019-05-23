@@ -116,6 +116,7 @@ for more information.")
    ((org-chef-match-url "nytimes.com" URL) (org-chef-nytimes-fetch URL))
    ((org-chef-match-url "saveur.com" URL) (org-chef-saveur-fetch URL))
    ((org-chef-match-url "xiachufang.com" URL) (org-chef-xiachufang-fetch URL))
+   ((org-chef-match-url "finecooking.com" URL) (org-chef-fine-cooking-fetch URL))
    (t nil)))
 
 
