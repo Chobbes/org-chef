@@ -1,6 +1,6 @@
 ;;; org-chef-24kitchen.el --- org-chef 24kitchen fetching.  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2019 Folkert van der Beek
+;; Copyright (C) 2019 Calvin Beck, Folkert van der Beek
 
 ;; Author:  Folkert van der Beek <folkertvanderbeek@gmail.com>
 ;; URL: https://github.com/Chobbes/org-chef
