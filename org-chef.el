@@ -41,6 +41,7 @@
 
 
 (require 'org-chef-utils)
+(require 'org-chef-24kitchen)
 (require 'org-chef-all-recipes)
 (require 'org-chef-genius-kitchen)
 (require 'org-chef-simply-recipes)
@@ -103,6 +104,7 @@ for more information.")
 (defun org-chef-fetch-recipe-specific-url (URL)
   "Look up a recipe based on a specific URL."
   (cond
+   ((org-chef-match-url "24kitchen.nl" URL) (org-chef-24kitchen-fetch URL))
    ((org-chef-match-url "allrecipes.com" URL) (org-chef-all-recipes-fetch URL))
    ((org-chef-match-url "geniuskitchen.com" URL) (org-chef-genius-kitchen-fetch URL))
    ((org-chef-match-url "simplyrecipes.com" URL) (org-chef-simply-recipes-fetch URL))
