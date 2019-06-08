@@ -41,7 +41,7 @@
 
 (defun org-chef-serious-eats-extract-name (dom)
   "Get the name of a recipe from an seriouseats DOM."
-  (dom-text (car (dom-elements dom 'class "^recipe-title$"))))
+  (dom-text (car (dom-elements dom 'class "recipe-title"))))
 
 
 (defun org-chef-serious-eats-extract-ingredients (dom)
