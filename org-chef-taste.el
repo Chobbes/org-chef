@@ -35,6 +35,7 @@
 ;;; Code:
 
 (require 'org-chef-utils)
+(require 'cl-seq)
 (require 'dom)
 
 (defun org-chef-taste-extract-cooking-infos (dom info)
