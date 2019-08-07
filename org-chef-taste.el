@@ -37,6 +37,13 @@
 (require 'org-chef-utils)
 (require 'dom)
 
+(defun org-chef-taste-extract-cooking-info (dom info)
+  "Get info from recipe-cooking-info in a taste.com.au DOM."
+  (let ((i (cl-position info (mapcar #'(lambda (n) (string-trim (dom-text n))) (dom-by-tag (dom-by-class dom "^recipe-cooking-infos$") 'li)) :test 'equal)))
+    (if i
+        (dom-text (nth i (dom-by-tag (dom-by-class dom "^recipe-cooking-infos$") 'b)))
+      "")))
+
 (defun org-chef-taste-extract-name (dom)
   "Get the name of a recipe from a taste.com.au DOM."
   (dom-text (dom-by-tag dom 'h1)))
@@ -48,18 +55,18 @@
 
 (defun org-chef-taste-extract-servings (dom)
   "Get the servings for a recipe from a taste.com.au DOM."
-  (dom-text (nth 2 (dom-by-tag
-                    (dom-by-class dom "^recipe-cooking-infos$") 'b))))
+  (let ((servings (org-chef-taste-extract-cooking-info dom "Servings")))
+    (if (string-equal servings "")
+        (org-chef-taste-extract-cooking-info dom "Makes")
+      servings)))
 
 (defun org-chef-taste-extract-prep-time (dom)
   "Get the prep time for a recipe from a taste.com.au DOM."
-  (dom-text (nth 0 (dom-by-tag
-                    (dom-by-class dom "^recipe-cooking-infos$") 'b))))
+  (org-chef-taste-extract-cooking-info dom "Prep"))
 
 (defun org-chef-taste-extract-cook-time (dom)
   "Get the prep time for a recipe from a taste.com.au DOM."
-  (dom-text (nth 1 (dom-by-tag
-                    (dom-by-class dom "^recipe-cooking-infos$") 'b))))
+  (org-chef-taste-extract-cooking-info dom "Cook"))
 
 (defun org-chef-taste-extract-directions (dom)
   "Get the directions for a recipe from a taste.com.au DOM."
