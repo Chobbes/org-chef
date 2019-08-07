@@ -56,6 +56,7 @@
 (require 'org-chef-saveur)
 (require 'org-chef-xiachufang)
 (require 'org-chef-wordpress)
+(require 'org-chef-taste)
 
 
 (defvar org-chef-fetch-workaround
@@ -119,6 +120,7 @@ for more information.")
    ((org-chef-match-url "saveur.com" URL) (org-chef-saveur-fetch URL))
    ((org-chef-match-url "xiachufang.com" URL) (org-chef-xiachufang-fetch URL))
    ((org-chef-match-url "finecooking.com" URL) (org-chef-fine-cooking-fetch URL))
+   ((org-chef-match-url "taste.com.au" URL) (org-chef-taste-fetch URL))
    (t nil)))
 
 
