@@ -103,6 +103,7 @@
   - http://www.xiachufang.com/ (下厨房 Chinese)
   - https://www.finecooking.com/
   - Any recipe site based on wordpress
+  - https://taste.com.au/
 
 * Contributing
 
@@ -113,7 +114,7 @@
   org-chef, then you should definitely let us know through a GitHub
   issue! Org-chef's goal is to support as many sites as possible, so
   missing websites are considered bugs!
-  
+
   Additionally, there is a #org-chef channel on freenode that you're
   welcome to join. Share recipes, give each other org-chef tips, be
   happy :).
