@@ -60,8 +60,12 @@
 
 
 (defvar org-chef-fetch-workaround
-  (and (< emacs-major-version 27) 't)
-  "Inspired by  https://github.com/magit/ghub/blob/6f1074b780131638b28cc76c8aa02f0dba0713f0/ghub.el
+  (and
+   ;; Note: For build sans gnutls, `libgnutls-version' is -1.
+   (>= libgnutls-version 30603)
+   (version<= emacs-version "26.2")
+   't)
+  "Inspired by https://github.com/magit/ghub/blob/7d59937d7782d0062216130a4d059b45e8396f82/ghub.el#L452
 
 See https://github.com/magit/ghub/issues/81 and https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341
 for more information.")
