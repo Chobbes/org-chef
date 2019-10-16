@@ -136,6 +136,7 @@ for more information.")
       (org-chef-wordpress-fetch URL))))
 
 
+;;;###autoload
 (defun org-chef-insert-recipe (URL)
   "Prompt for a recipe URL, and then insert the recipe at point."
   (interactive "sRecipe URL: ")
