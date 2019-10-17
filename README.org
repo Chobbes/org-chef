@@ -2,16 +2,16 @@
 
 * Introduction
 
-  org-chef is a package for managing recipes in org-mode. One of the
+  =org-chef= is a package for managing recipes in org-mode. One of the
   main features is that it can automatically extract recipes from
   websites like allrecipes.com
 
 * Installation
 
-  org-chef is available on MELPA!
+  =org-chef= is available on MELPA!
 
   I manage my packages via [[https://github.com/jwiegley/use-package][use-package]]. I have added this to my
-  ~.emacs~ file to install org-chef:
+  ~.emacs~ file to install =org-chef=:
 
   #+BEGIN_SRC elisp
     (require 'package)
@@ -75,7 +75,7 @@
        6. If grilling, place patties on foil, and grill about 8 minutes on each side. If baking, place patties on baking sheet, and bake about 10 minutes on each side.
   #+END_SRC
 
-  Additionally there is a capture template in there for manually
+  Additionally, there is a capture template in there for manually
   entering a recipe, if you so desire!
 
 * Inserting at Point
@@ -111,10 +111,10 @@
   issues (and feel free to include a recipe that you like in it!)
 
   If you find a site that you like that doesn't currently work with
-  org-chef, then you should definitely let us know through a GitHub
-  issue! Org-chef's goal is to support as many sites as possible, so
+  =org-chef=, then you should definitely let us know through a GitHub
+  issue! =org-chef='s goal is to support as many sites as possible, so
   missing websites are considered bugs!
 
   Additionally, there is a #org-chef channel on freenode that you're
-  welcome to join. Share recipes, give each other org-chef tips, be
+  welcome to join. Share recipes, give each other =org-chef= tips, be
   happy :).
