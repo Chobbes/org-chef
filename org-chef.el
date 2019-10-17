@@ -70,6 +70,21 @@
 See https://github.com/magit/ghub/issues/81 and https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341
 for more information.")
 
+(defvar org-chef-empty-recipe
+  '((name . "%^{Recipe title: }")
+    (source-url . "")
+    (servings . "")
+    (prep-time . "")
+    (cook-time . "")
+    (ready-in . "")
+    (ingredients "%s")
+    (directions "."))
+  "Empty recipe structure for reference.")
+
+(defvar org-chef-capture-template
+  (org-chef-recipe-org-string org-chef-empty-recipe)
+  "Standard capture template for manual recipe insertion in org-capture.")
+
 (defun org-chef-recipe-insert-org (recipe)
   "Insert a RECIPE as an ‘org-mode’ heading."
   (org-insert-heading)
