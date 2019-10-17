@@ -40,49 +40,49 @@
 
 
 (defun org-chef-chef-koch-extract-name (dom)
-  "Get the name of a recipe from an chefkoch DOM."
-  (dom-text (car (dom-by-class dom "page-title"))))
+  "Get the name of a recipe from a chefkoch DOM."
+  (dom-text (dom-by-tag (dom-by-class dom "recipe-header") 'h1)))
 
 
 (defun org-chef-chef-koch-ingredient-to-string (dom)
-  (let ((amount (replace-regexp-in-string " " " " (string-trim (dom-texts (car (dom-by-tag dom 'td))))))
+  (let ((amount (replace-regexp-in-string "[ \\t\\n\\r]+" " " (string-trim (dom-texts (car (dom-by-tag dom 'td))))))
         (name (string-trim (dom-texts (cadr (dom-by-tag dom 'td))))))
     (format "%s %s" amount name)))
 
 
 (defun org-chef-chef-koch-extract-ingredients (dom)
-  "Get the ingredients for a recipe from an chefkoch DOM."
-  (mapcar #'org-chef-chef-koch-ingredient-to-string (dom-by-tag (dom-by-class dom "^incredients$") 'tr)))
+  "Get the ingredients for a recipe from a chefkoch DOM."
+  (mapcar #'org-chef-chef-koch-ingredient-to-string (dom-by-tag (dom-by-class dom "ingredients") 'tr)))
 
 
 (defun org-chef-chef-koch-extract-servings (dom)
-  "Get the number of servings for a recipe from an chefkoch DOM."
+  "Get the number of servings for a recipe from a chefkoch DOM."
   (dom-attr (dom-elements dom 'name "^portionen$") 'value))
 
 
 (defun org-chef-chef-koch-extract-prep-time (dom)
-  "Get the amount of prep-time for a recipe from an chefkoch DOM."
+  "Get the amount of prep-time for a recipe from a chefkoch DOM."
   (let ((str (replace-regexp-in-string "\n" " " (dom-texts (dom-by-id dom "^preparation-info$")))))
     (string-match "Arbeitszeit:[[:space:]]+ca. \\(?1:[^\.]*\\)\." str)
     (match-string 1 str)))
 
 
 (defun org-chef-chef-koch-extract-cook-time (dom)
-  "Get the amount of cook-time for a recipe from an chefkoch DOM."
+  "Get the amount of cook-time for a recipe from a chefkoch DOM."
   (let ((str (replace-regexp-in-string "\n" " " (dom-texts (dom-by-id dom "^preparation-info$")))))
     (string-match "Koch-/Backzeit:[[:space:]]+ca. \\(?1:[^\.]*\\)\." str)
     (match-string 1 str)))
 
 
 (defun org-chef-chef-koch-extract-ready-in (dom)
-  "Get the total amount of time for a recipe from an chefkoch DOM."
+  "Get the total amount of time for a recipe from a chefkoch DOM."
   "")
 
 
 (defun org-chef-chef-koch-extract-directions (dom)
-  "Get the directions for a recipe from an chefkoch DOM."
+  "Get the directions for a recipe from a chefkoch DOM."
   (with-temp-buffer
-    (insert (string-trim (dom-texts (dom-by-class dom "^instructions"))))
+    (insert (string-trim (dom-text (car (dom-by-tag (nth 3 (dom-by-tag dom 'article)) 'div)))))
     (delete-trailing-whitespace)
     (split-string (buffer-string) "\n")))
 
