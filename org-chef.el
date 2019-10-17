@@ -143,6 +143,7 @@ for more information.")
    (t nil)))
 
 
+;;;###autoload
 (defun org-chef-fetch-recipe (URL)
   "Look up a recipe at a URL."
   (let ((fetched-recipe (org-chef-fetch-recipe-specific-url URL)))
