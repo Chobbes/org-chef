@@ -35,6 +35,7 @@
 ;;; Code:
 
 (require 'cl-macs)
+(require 'gnutls)
 
 (defun org-chef-remove-empty-strings (lst)
   "Filter out any empty strings in a list of strings (LST)."
