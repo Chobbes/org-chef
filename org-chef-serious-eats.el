@@ -80,7 +80,7 @@
 (defun org-chef-serious-eats-extract-directions (dom)
   "Get the directions for a recipe from an seriouseats DOM."
   (mapcar #'(lambda (n) (string-trim (dom-texts (dom-children n))))
-          (dom-by-class dom "^recipe-procedures$")))
+          (dom-by-class dom "recipe-procedure")))
 
 
 (defun org-chef-serious-eats-fetch (url)
