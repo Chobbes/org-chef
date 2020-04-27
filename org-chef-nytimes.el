@@ -46,15 +46,12 @@
 
 (defun org-chef-nytimes-ingredient-to-string (dom)
   "Extract string representation of a single ingredient from an nytimes DOM."
-  (replace-regexp-in-string
-   " \\([,\.]\\)" "\\1"
-   (string-join (org-chef-remove-empty-strings (mapcar 'string-trim (dom-strings dom))) " ")))
+  (string-join (org-chef-remove-empty-strings (mapcar 'string-trim (dom-strings dom))) " "))
 
 (defun org-chef-nytimes-extract-ingredients (dom)
   "Get the ingredients for a recipe from an nytimes DOM."
   (mapcar 'org-chef-nytimes-ingredient-to-string
-          (dom-elements dom 'itemprop "recipeIngredient")))
-
+          (dom-by-tag (car (dom-elements dom 'class "^recipe-ingredients$")) 'li)))
 
 (defun org-chef-nytimes-extract-servings (dom)
   "Get the number of servings for a recipe from an nytimes DOM."
@@ -78,7 +75,7 @@
 
 (defun org-chef-nytimes-extract-directions (dom)
   "Get the directions for a recipe from an nytimes DOM."
-  (mapcar 'dom-texts (dom-by-tag (dom-elements dom 'itemprop "recipeInstructions") 'li)))
+  (mapcar 'dom-texts (dom-by-tag (dom-by-class dom "recipe-steps") 'li)))
 
 
 (defun org-chef-nytimes-from-dom (dom)
