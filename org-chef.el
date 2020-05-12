@@ -57,6 +57,7 @@
 (require 'org-chef-xiachufang)
 (require 'org-chef-wordpress)
 (require 'org-chef-taste)
+(require 'org-chef-bbc-food)
 
 
 (defvar org-chef-fetch-workaround
@@ -125,6 +126,7 @@ for more information.")
    ((org-chef-match-url "xiachufang.com" URL) (org-chef-xiachufang-fetch URL))
    ((org-chef-match-url "finecooking.com" URL) (org-chef-fine-cooking-fetch URL))
    ((org-chef-match-url "taste.com.au" URL) (org-chef-taste-fetch URL))
+   ((org-chef-match-url "bbc.co.uk/food/" URL) (org-chef-bbc-food-fetch URL))
    (t nil)))
 
 
