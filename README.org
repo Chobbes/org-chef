@@ -26,7 +26,7 @@
 * Org-Capture
 
   It's recommended that you set up an org-capture template to capture
-  recipes. Here is an example of that:
+  recipes. =org-chef= actually provides a standard template for manual entry! Here is an example of that:
 
   #+BEGIN_SRC lisp
     (setq org-capture-templates
@@ -34,7 +34,7 @@
              "%(org-chef-get-recipe-from-url)"
              :empty-lines 1)
             ("m" "Manual Cookbook" entry (file "~/org/cookbook.org")
-             "* %^{Recipe title: }\n  :PROPERTIES:\n  :source-url:\n  :servings:\n  :prep-time:\n  :cook-time:\n  :ready-in:\n  :END:\n** Ingredients\n   %?\n** Directions\n\n")))
+             org-chef-capture-template)))
   #+END_SRC
 
   When capturing to the cookbook it will prompt you for a URL, you can
