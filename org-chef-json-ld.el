@@ -76,8 +76,9 @@
 (defun org-chef-json-ld-clean-json (json)
   "Clean JSON string of common errors."
   (let* ((cleaned-1 (replace-regexp-in-string "\n" " " json))
-         (cleaned-2 (replace-regexp-in-string "\r" " " cleaned-1)))
-    cleaned-2))
+         (cleaned-2 (replace-regexp-in-string "\r" " " cleaned-1))
+         (cleaned-3 (replace-regexp-in-string "\t" " " cleaned-2)))
+    cleaned-3))
 
 (defun org-chef-json-ld-extract-recipe (json)
   "Find the Recipe LD in JSON and return the hash. Return nil if not found."
