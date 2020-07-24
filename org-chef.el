@@ -43,6 +43,7 @@
 (require 'org-chef-utils)
 (require 'org-chef-24kitchen)
 (require 'org-chef-all-recipes)
+(require 'org-chef-json-ld)
 (require 'org-chef-genius-kitchen)
 (require 'org-chef-simply-recipes)
 (require 'org-chef-martha-stewart)
@@ -71,6 +72,10 @@
 See https://github.com/magit/ghub/issues/81 and https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341
 for more information.")
 
+(defcustom org-chef-prefer-json-ld nil
+  "Prefer JSON-LD extractor over custom extractor. This is for testing the JSON-LD functionality."
+  :type 'boolean)
+  
 (defun org-chef-recipe-insert-org (recipe)
   "Insert a RECIPE as an ‘org-mode’ heading."
   (org-insert-heading)
@@ -132,11 +137,12 @@ for more information.")
 
 (defun org-chef-fetch-recipe (URL)
   "Look up a recipe at a URL."
-  (let ((fetched-recipe (org-chef-fetch-recipe-specific-url URL)))
-    (if fetched-recipe
-        fetched-recipe
-      (org-chef-wordpress-fetch URL))))
-
+  (or (and org-chef-prefer-json-ld
+           (org-chef-json-ld-fetch URL))
+      (org-chef-fetch-recipe-specific-url URL)
+      (org-chef-wordpress-fetch URL)
+      (and (not org-chef-prefer-json-ld)
+           (org-chef-json-ld-fetch URL))))
 
 ;;;###autoload
 (defun org-chef-insert-recipe (URL)
