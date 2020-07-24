@@ -40,6 +40,10 @@
 (require 'json)
 (require 'cl-seq)
 
+(defcustom org-chef-json-ld-debug nil
+  "Debug JSON-LD parsing. Surfaces errors in JSON parsing."
+  :type 'boolean)
+
 (defun org-chef-json-ld-extract-directions (nodes)
   "Get the directions for a recipe from a list of json NODES."
   (cond ((stringp nodes)
@@ -92,12 +96,22 @@
          (cl-some #'org-chef-json-ld-extract-recipe json))
         (t nil)))
 
+(defun org-chef-json-ld-safe-read-from-string (str)
+  "Safely parse STR as json.
+
+Like `json-read-from-string', but catch errors and return nil if
+`org-chef-json-ld-debug' is not t."
+  (if org-chef-json-ld-debug
+      (json-read-from-string str)
+    (ignore-errors
+      (json-read-from-string str))))
+    
 (defun org-chef-json-ld-extract-json-ld (dom)
   "Extract a list of the json-ld elements in DOM."
   (let* ((json-lds (dom-elements dom 'type "^application/ld\\+json$"))
          (json-lds-raw (mapcar #'dom-text json-lds))
          (json-lds-cleaned (mapcar #'org-chef-json-ld-clean-json json-lds-raw))
-         (json-lds (mapcar #'json-read-from-string json-lds-cleaned)))
+         (json-lds (cl-delete-if #'null (mapcar #'org-chef-json-ld-safe-read-from-string json-lds-cleaned))))
     json-lds))
 
 (defun org-chef-json-ld-fetch (url)
