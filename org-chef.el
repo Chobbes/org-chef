@@ -59,6 +59,8 @@
 (require 'org-chef-wordpress)
 (require 'org-chef-taste)
 (require 'org-chef-bbc-food)
+(require 'subr-x)
+(require 'url-parse)
 
 
 (defvar org-chef-fetch-workaround
@@ -72,10 +74,38 @@
 See https://github.com/magit/ghub/issues/81 and https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341
 for more information.")
 
+(defvar org-chef-fetch-table
+  (let ((ht (make-hash-table :test 'equal)))
+    (prog1 ht
+      (puthash "24kitchen.nl"          'org-chef-24kitchen-fetch           ht)
+      (puthash "allrecipes.com"        'org-chef-all-recipes-fetch         ht)
+      (puthash "geniuskitchen.com"     'org-chef-genius-kitchen-fetch      ht)
+      (puthash "simplyrecipes.com"     'org-chef-simply-recipes-fetch      ht)
+      (puthash "marthastewart.com"     'org-chef-martha-stewart-fetch      ht)
+      (puthash "culturesforhealth.com" 'org-chef-cultures-for-health-fetch ht)
+      (puthash "marmiton.org"          'org-chef-marmiton-fetch            ht)
+      (puthash "seriouseats.com"       'org-chef-serious-eats-fetch        ht)
+      (puthash "reluctantgourmet.com"  'org-chef-reluctant-gourmet-fetch   ht)
+      (puthash "chefkoch.de"           'org-chef-chef-koch-fetch           ht)
+      (puthash "steamykitchen.com"     'org-chef-steamy-kitchen-fetch      ht)
+      (puthash "nytimes.com"           'org-chef-nytimes-fetch             ht)
+      (puthash "saveur.com"            'org-chef-saveur-fetch              ht)
+      (puthash "xiachufang.com"        'org-chef-xiachufang-fetch          ht)
+      (puthash "finecooking.com"       'org-chef-fine-cooking-fetch        ht)
+      (puthash "taste.com.au"          'org-chef-taste-fetch               ht)
+      (puthash "bbc.co.uk"             'org-chef-bbc-food-fetch            ht)))
+  "Dispatch table associating a host URL with a fetch function.")
+
 (defcustom org-chef-prefer-json-ld nil
   "Prefer JSON-LD extractor over custom extractor. This is for testing the JSON-LD functionality."
   :type 'boolean)
-  
+
+
+(defun org-chef-supported-sites ()
+  "Host URLs of supported recipe sites."
+  (hash-table-keys org-chef-fetch-table))
+
+
 (defun org-chef-recipe-insert-org (recipe)
   "Insert a RECIPE as an ‘org-mode’ heading."
   (org-insert-heading)
@@ -107,32 +137,11 @@ for more information.")
                     (buffer-string)))
 
 
-(defun org-chef-match-url (BASE URL)
-  "Match URL against a BASE url."
-  (not (null (string-match-p (regexp-quote BASE) URL))))
-
-
 (defun org-chef-fetch-recipe-specific-url (URL)
   "Look up a recipe based on a specific URL."
-  (cond
-   ((org-chef-match-url "24kitchen.nl" URL) (org-chef-24kitchen-fetch URL))
-   ((org-chef-match-url "allrecipes.com" URL) (org-chef-all-recipes-fetch URL))
-   ((org-chef-match-url "geniuskitchen.com" URL) (org-chef-genius-kitchen-fetch URL))
-   ((org-chef-match-url "simplyrecipes.com" URL) (org-chef-simply-recipes-fetch URL))
-   ((org-chef-match-url "marthastewart.com" URL) (org-chef-martha-stewart-fetch URL))
-   ((org-chef-match-url "culturesforhealth.com" URL) (org-chef-cultures-for-health-fetch URL))
-   ((org-chef-match-url "marmiton.org" URL) (org-chef-marmiton-fetch URL))
-   ((org-chef-match-url "seriouseats.com" URL) (org-chef-serious-eats-fetch URL))
-   ((org-chef-match-url "reluctantgourmet.com" URL) (org-chef-reluctant-gourmet-fetch URL))
-   ((org-chef-match-url "chefkoch.de" URL) (org-chef-chef-koch-fetch URL))
-   ((org-chef-match-url "steamykitchen.com" URL) (org-chef-steamy-kitchen-fetch URL))
-   ((org-chef-match-url "nytimes.com" URL) (org-chef-nytimes-fetch URL))
-   ((org-chef-match-url "saveur.com" URL) (org-chef-saveur-fetch URL))
-   ((org-chef-match-url "xiachufang.com" URL) (org-chef-xiachufang-fetch URL))
-   ((org-chef-match-url "finecooking.com" URL) (org-chef-fine-cooking-fetch URL))
-   ((org-chef-match-url "taste.com.au" URL) (org-chef-taste-fetch URL))
-   ((org-chef-match-url "bbc.co.uk/food/" URL) (org-chef-bbc-food-fetch URL))
-   (t nil)))
+  (when-let* ((host (url-host (url-generic-parse-url URL)))
+              (fetch (gethash host org-chef-fetch-table)))
+    (funcall fetch URL)))
 
 
 (defun org-chef-fetch-recipe (URL)
