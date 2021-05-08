@@ -1,0 +1,37 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "author": "Jake Smith",
+      "cookTime": "PT2H",
+      "datePublished": "2015-05-18",
+      "description": "Your recipe description goes here",
+      "image": "http://www.example.com/images.jpg",
+      "recipeIngredient": [
+        "ingredient 1",
+        "ingredient 2",
+        "ingredient 3",
+        "ingredient 4",
+        "ingredient 5"
+      ],
+      "interactionStatistic": {
+        "@type": "InteractionCounter",
+        "interactionType": "http://schema.org/Comment",
+        "userInteractionCount": "5"
+      },
+      "name": "Rand's Cookies",
+      "nutrition": {
+        "@type": "NutritionInformation",
+        "calories": "1200 calories",
+        "carbohydrateContent": "12 carbs",
+        "proteinContent": "9 grams of protein",
+        "fatContent": "9 grams fat"
+      },
+      "prepTime": "PT15M",
+      "recipeInstructions": "This is the long part, etc.",
+      "recipeYield": "12 cookies"
+    }
+  ]
+}

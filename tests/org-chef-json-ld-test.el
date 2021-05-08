@@ -16,6 +16,14 @@
     (should (eq 5 (length ingredients)))
     (should (string= "ingredient 1" (elt ingredients 0)))))
 
+(ert-deftest org-chef-json-ld-extract-recipe-graph ()
+  (let* ((json (json-read-file "json-ld-sample-graph.json"))
+         (recipe (org-chef-json-ld-extract-recipe json))
+         (ingredients (cdr (assq 'recipeIngredient recipe))))
+    (should (string= "PT2H" (cdr (assq 'cookTime recipe))))
+    (should (eq 5 (length ingredients)))
+    (should (string= "ingredient 1" (elt ingredients 0)))))
+
 (ert-deftest org-chef-json-ld-parse-duration ()
   (should (string= "1 hour" (org-chef-json-ld-parse-duration "PT1H")))
   (should (string= "1 hour" (org-chef-json-ld-parse-duration "PT01H")))
