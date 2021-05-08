@@ -39,49 +39,39 @@
 (require 'dom)
 
 
+(defun org-chef-serious-eats-extract-meta (dom name)
+  "Extract a metadata element from the serious eats dom."
+  (string-trim (dom-texts (dom-elements (dom-elements dom 'class (concat "project-meta__" name)) 'class "meta-text__data"))))
+
 (defun org-chef-serious-eats-extract-name (dom)
   "Get the name of a recipe from an seriouseats DOM."
-  (dom-text (car (dom-elements dom 'class "recipe-title"))))
-
+  (dom-text (car (dom-elements dom 'class "heading__title"))))
 
 (defun org-chef-serious-eats-extract-ingredients (dom)
   "Get the ingredients for a recipe from an seriouseats DOM."
-  (mapcar 'dom-texts (dom-elements dom 'class "^ingredient$")))
-
+  (mapcar #'(lambda (n) (string-trim (dom-texts n)))
+          (dom-by-tag (dom-by-class dom "ingredient-list") 'li)))
 
 (defun org-chef-serious-eats-extract-servings (dom)
   "Get the number of servings for a recipe from an seriouseats DOM."
-  (dom-text (car (dom-elements dom 'itemprop "^recipeYield$"))))
-
+  (org-chef-serious-eats-extract-meta dom "recipe-yield"))
 
 (defun org-chef-serious-eats-extract-prep-time (dom)
   "Get the amount of prep-time for a recipe from an seriouseats DOM."
-  (dom-text (car (dom-by-class
-                  (cadr
-                   (org-chef-dom-children
-                    (car (dom-by-class dom "^recipe-about$"))))
-                  "info"))))
-
+  (org-chef-serious-eats-extract-meta dom "active-time"))
 
 (defun org-chef-serious-eats-extract-cook-time (dom)
   "Get the amount of cook-time for a recipe from an seriouseats DOM."
   nil)
 
-
 (defun org-chef-serious-eats-extract-ready-in (dom)
   "Get the total amount of time for a recipe from an seriouseats DOM."
-  (dom-text (car (dom-by-class
-                  (caddr
-                   (org-chef-dom-children
-                    (car (dom-by-class dom "^recipe-about$"))))
-                  "info"))))
-
+  (org-chef-serious-eats-extract-meta dom "total-time"))
 
 (defun org-chef-serious-eats-extract-directions (dom)
   "Get the directions for a recipe from an seriouseats DOM."
-  (mapcar #'(lambda (n) (string-trim (dom-texts (dom-children n))))
-          (dom-by-class dom "recipe-procedure")))
-
+  (mapcar #'(lambda (n) (string-trim (dom-texts n)))
+          (dom-by-tag (dom-by-class (dom-by-class dom "section--instructions") "structured-project__steps") 'li)))
 
 (defun org-chef-serious-eats-fetch (url)
   "Given an seriouseats.com URL, retrieve the recipe information.
