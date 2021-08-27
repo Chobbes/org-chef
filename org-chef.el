@@ -157,6 +157,7 @@ for more information.")
   (org-chef-recipe-insert-org (org-chef-fetch-recipe URL)))
 
 
+;;;###autoload
 (defun org-chef-get-recipe-from-url ()
   "Prompt for a recipe URL, and return the ‘org-mode’ string."
   (let ((URL (read-string "Recipe URL: ")))
