@@ -66,16 +66,15 @@ This returns an alist with the following keys:
 - ready-in
 - directions
 - source-url"
-  (with-current-buffer (org-chef-url-retrieve-synchronously url)
-    (let ((dom (libxml-parse-html-region (point-min) (point-max))))
-      `((name . ,(org-chef-fine-cooking-extract-name dom))
-        (ingredients . ,(org-chef-fine-cooking-extract-ingredients dom))
-        (servings . ,(org-chef-fine-cooking-extract-servings dom))
-        (prep-time . nil)
-        (cook-time . nil)
-        (ready-in . nil)
-        (directions . ,(org-chef-fine-cooking-extract-directions dom))
-        (source-url . ,url)))))
+  (let ((dom (org-chef-url-retrieve-dom url)))
+    `((name . ,(org-chef-fine-cooking-extract-name dom))
+      (ingredients . ,(org-chef-fine-cooking-extract-ingredients dom))
+      (servings . ,(org-chef-fine-cooking-extract-servings dom))
+      (prep-time . nil)
+      (cook-time . nil)
+      (ready-in . nil)
+      (directions . ,(org-chef-fine-cooking-extract-directions dom))
+      (source-url . ,url))))
 
 (provide 'org-chef-fine-cooking)
 ;;; org-chef-fine-cooking.el ends here

@@ -113,9 +113,8 @@ This returns an alist with the following keys:
 - ready-in
 - directions
 - source-url"
-  (with-current-buffer (org-chef-url-retrieve-synchronously url)
-    (let ((dom (libxml-parse-html-region (point-min) (point-max))))
-      (cons `(source-url . ,url) (org-chef-reluctant-gourmet-from-dom dom)))))
+  (let ((dom (org-chef-url-retrieve-dom url)))
+    (cons `(source-url . ,url) (org-chef-reluctant-gourmet-from-dom dom))))
 
 
 (provide 'org-chef-reluctant-gourmet)

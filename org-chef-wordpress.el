@@ -94,19 +94,17 @@ This returns an alist with the following keys:
 - source-url
 
 If this is not a wordpress site, then return nil."
-  (with-current-buffer (org-chef-url-retrieve-synchronously url)
-
-    (let  ((dom (libxml-parse-html-region (point-min) (point-max))))
-      (if (org-chef-is-wordpress-p dom)
-          `((name . ,(org-chef-wordpress-extract-name dom))
-            (ingredients . ,(org-chef-wordpress-extract-ingredients dom))
-            (servings . ,(org-chef-wordpress-extract-servings dom))
-            (prep-time . ,(org-chef-wordpress-extract-prep-time dom))
-            (cook-time . ,(org-chef-wordpress-extract-cook-time dom))
-            (ready-in . ,(org-chef-wordpress-extract-ready-in dom))
-            (directions . ,(org-chef-wordpress-extract-directions dom))
-            (source-url . ,url))
-        nil))))
+  (let  ((dom (org-chef-url-retrieve-dom url)))
+    (if (org-chef-is-wordpress-p dom)
+        `((name . ,(org-chef-wordpress-extract-name dom))
+          (ingredients . ,(org-chef-wordpress-extract-ingredients dom))
+          (servings . ,(org-chef-wordpress-extract-servings dom))
+          (prep-time . ,(org-chef-wordpress-extract-prep-time dom))
+          (cook-time . ,(org-chef-wordpress-extract-cook-time dom))
+          (ready-in . ,(org-chef-wordpress-extract-ready-in dom))
+          (directions . ,(org-chef-wordpress-extract-directions dom))
+          (source-url . ,url))
+      nil)))
 
 
 (provide 'org-chef-wordpress)

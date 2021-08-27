@@ -88,17 +88,15 @@ This returns an alist with the following keys:
 - ready-in
 - directions
 - source-url"
-  (with-current-buffer (org-chef-url-retrieve-synchronously url)
-    (let  ((dom (libxml-parse-html-region (point-min) (point-max))))
-
-      `((name . ,(org-chef-steamy-kitchen-extract-name dom))
-        (ingredients . ,(org-chef-steamy-kitchen-extract-ingredients dom))
-        (servings . ,(org-chef-steamy-kitchen-extract-servings dom))
-        (prep-time . ,(org-chef-steamy-kitchen-extract-prep-time dom))
-        (cook-time . ,(org-chef-steamy-kitchen-extract-cook-time dom))
-        (ready-in . ,(org-chef-steamy-kitchen-extract-ready-in dom))
-        (directions . ,(org-chef-steamy-kitchen-extract-directions dom))
-        (source-url . ,url)))))
+  (let  ((dom (org-chef-url-retrieve-dom url)))
+    `((name . ,(org-chef-steamy-kitchen-extract-name dom))
+      (ingredients . ,(org-chef-steamy-kitchen-extract-ingredients dom))
+      (servings . ,(org-chef-steamy-kitchen-extract-servings dom))
+      (prep-time . ,(org-chef-steamy-kitchen-extract-prep-time dom))
+      (cook-time . ,(org-chef-steamy-kitchen-extract-cook-time dom))
+      (ready-in . ,(org-chef-steamy-kitchen-extract-ready-in dom))
+      (directions . ,(org-chef-steamy-kitchen-extract-directions dom))
+      (source-url . ,url))))
 
 
 (provide 'org-chef-steamy-kitchen)
