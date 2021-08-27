@@ -36,6 +36,7 @@
 
 (require 'cl-macs)
 (require 'gnutls)
+(require 'dom)
 
 (defun org-chef-remove-empty-strings (lst)
   "Filter out any empty strings in a list of strings (LST)."
@@ -73,6 +74,12 @@ This is a wrapper for url-retrieve-synchronously, which primarily serves to impl
                 gnutls-algorithm-priority)))
 
     (url-retrieve-synchronously url)))
+
+
+(defun org-chef-string-to-dom (xml)
+  (with-temp-buffer
+    (insert xml)
+    (xml-parse-region (point-min) (point-max))))
 
 
 (provide 'org-chef-utils)

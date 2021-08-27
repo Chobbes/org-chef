@@ -60,6 +60,7 @@
 (require 'org-chef-taste)
 (require 'org-chef-bbc-food)
 (require 'org-chef-bbc-good-food)
+(require 'org-chef-jamie-oliver)
 
 
 (defvar org-chef-fetch-workaround
@@ -134,6 +135,7 @@ for more information.")
    ((org-chef-match-url "taste.com.au" URL) (org-chef-taste-fetch URL))
    ((org-chef-match-url "bbc.co.uk/food/" URL) (org-chef-bbc-food-fetch URL))
    ((org-chef-match-url "bbcgoodfood.com" URL) (org-chef-bbc-good-food-fetch URL))
+   ((org-chef-match-url "jamieoliver.com" URL) (org-chef-jamie-oliver-fetch URL))
    (t nil)))
 
 
