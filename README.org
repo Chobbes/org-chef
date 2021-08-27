@@ -102,10 +102,13 @@
   - https://nytimes.com/
   - http://www.xiachufang.com/ (下厨房 Chinese)
   - https://www.finecooking.com/
-  - Any recipe site based on wordpress
   - https://taste.com.au/
   - https://www.bbc.co.uk/food/
   - https://www.bbcgoodfood.com/
+  - https://www.jamieoliver.com/
+  - https://www.recipetineats.com/
+  - Any recipe site based on wordpress
+  - Any recipe site with embedded [[https://developers.google.com/search/docs/advanced/structured-data/recipe][JSON-LD]]
 
 * Contributing
 
