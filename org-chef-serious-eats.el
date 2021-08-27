@@ -86,17 +86,15 @@ This returns an alist with the following keys:
 - ready-in
 - directions
 - source-url"
-  (with-current-buffer (org-chef-url-retrieve-synchronously url)
-    (let  ((dom (libxml-parse-html-region (point-min) (point-max))))
-
-      `((name . ,(org-chef-serious-eats-extract-name dom))
-        (ingredients . ,(org-chef-serious-eats-extract-ingredients dom))
-        (servings . ,(org-chef-serious-eats-extract-servings dom))
-        (prep-time . ,(org-chef-serious-eats-extract-prep-time dom))
-        (cook-time . ,(org-chef-serious-eats-extract-cook-time dom))
-        (ready-in . ,(org-chef-serious-eats-extract-ready-in dom))
-        (directions . ,(org-chef-serious-eats-extract-directions dom))
-        (source-url . ,url)))))
+  (let  ((dom (org-chef-url-retrieve-dom url)))
+    `((name . ,(org-chef-serious-eats-extract-name dom))
+      (ingredients . ,(org-chef-serious-eats-extract-ingredients dom))
+      (servings . ,(org-chef-serious-eats-extract-servings dom))
+      (prep-time . ,(org-chef-serious-eats-extract-prep-time dom))
+      (cook-time . ,(org-chef-serious-eats-extract-cook-time dom))
+      (ready-in . ,(org-chef-serious-eats-extract-ready-in dom))
+      (directions . ,(org-chef-serious-eats-extract-directions dom))
+      (source-url . ,url))))
 
 (provide 'org-chef-serious-eats)
 ;;; org-chef-serious-eats.el ends here

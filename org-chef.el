@@ -48,6 +48,7 @@
 (require 'org-chef-simply-recipes)
 (require 'org-chef-martha-stewart)
 (require 'org-chef-cultures-for-health)
+(require 'org-chef-fine-cooking)
 (require 'org-chef-marmiton)
 (require 'org-chef-serious-eats)
 (require 'org-chef-reluctant-gourmet)

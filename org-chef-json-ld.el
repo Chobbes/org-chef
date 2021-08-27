@@ -109,7 +109,7 @@ Like `json-read-from-string', but catch errors and return nil if
       (json-read-from-string str)
     (ignore-errors
       (json-read-from-string str))))
-    
+
 (defun org-chef-json-ld-extract-json-ld (dom)
   "Extract a list of the json-ld elements in DOM."
   (let* ((json-lds (dom-elements dom 'type "^application/ld\\+json$"))
@@ -130,19 +130,18 @@ Like `json-read-from-string', but catch errors and return nil if
 - ready-in
 - directions
 - source-url"
-  (with-current-buffer (org-chef-url-retrieve-synchronously url)
-    (let* ((dom (libxml-parse-html-region (point-min) (point-max)))
-           (json-lds (org-chef-json-ld-extract-json-ld dom))
-           (recipe (org-chef-json-ld-extract-recipe json-lds)))
-      (if (null recipe)
-          nil
-        `((name . ,(cdr (assq 'name recipe)))
-          (ingredients . ,(cdr (assq 'recipeIngredient recipe)))
-          (servings . ,(format "%s" (cdr (assq 'recipeYield recipe))))
-          (ready-in . ,(org-chef-json-ld-parse-duration (cdr (assq 'totalTime recipe))))
-          (prep-time . ,(org-chef-json-ld-parse-duration (cdr (assq 'prepTime recipe))))
-          (cook-time . ,(org-chef-json-ld-parse-duration (cdr (assq 'cookTime recipe))))
-          (directions . ,(org-chef-json-ld-extract-directions (cdr (assq 'recipeInstructions recipe))))
-          (source-url . ,url))))))
+  (let* ((dom (org-chef-url-retrieve-dom url))
+         (json-lds (org-chef-json-ld-extract-json-ld dom))
+         (recipe (org-chef-json-ld-extract-recipe json-lds)))
+    (if (null recipe)
+        nil
+      `((name . ,(cdr (assq 'name recipe)))
+        (ingredients . ,(cdr (assq 'recipeIngredient recipe)))
+        (servings . ,(format "%s" (cdr (assq 'recipeYield recipe))))
+        (ready-in . ,(org-chef-json-ld-parse-duration (cdr (assq 'totalTime recipe))))
+        (prep-time . ,(org-chef-json-ld-parse-duration (cdr (assq 'prepTime recipe))))
+        (cook-time . ,(org-chef-json-ld-parse-duration (cdr (assq 'cookTime recipe))))
+        (directions . ,(org-chef-json-ld-extract-directions (cdr (assq 'recipeInstructions recipe))))
+        (source-url . ,url)))))
 
 (provide 'org-chef-json-ld)
