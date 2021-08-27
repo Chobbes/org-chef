@@ -61,6 +61,7 @@
 (require 'org-chef-bbc-food)
 (require 'org-chef-bbc-good-food)
 (require 'org-chef-jamie-oliver)
+(require 'org-chef-recipetin-eats)
 
 
 (defvar org-chef-fetch-workaround
@@ -136,6 +137,7 @@ for more information.")
    ((org-chef-match-url "bbc.co.uk/food/" URL) (org-chef-bbc-food-fetch URL))
    ((org-chef-match-url "bbcgoodfood.com" URL) (org-chef-bbc-good-food-fetch URL))
    ((org-chef-match-url "jamieoliver.com" URL) (org-chef-jamie-oliver-fetch URL))
+   ((org-chef-match-url "recipetineats.com" URL) (org-chef-recipetin-eats-fetch URL))
    (t nil)))
 
 
