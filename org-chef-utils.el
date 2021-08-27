@@ -82,5 +82,20 @@ This is a wrapper for url-retrieve-synchronously, which primarily serves to impl
     (xml-parse-region (point-min) (point-max))))
 
 
+(defun org-chef-url-retrieve-dom (url)
+  "Fetch URL synchronously, and parse into a DOM structure"
+  (with-current-buffer (org-chef-url-retrieve-synchronously url)
+    (goto-char (point-min))
+    (search-forward "\n\n")             ; skip past HTTP headers
+    (let ((result (libxml-parse-html-region (point) (point-max))))
+      (kill-buffer)                     ; don't leak buffer
+      result)))
+
+
+(defun org-chef-join (strings separator)
+  "Joins a list of strings using a separator"
+  (mapconcat #'identity strings separator))
+
+
 (provide 'org-chef-utils)
 ;;; org-chef-utils.el ends here
