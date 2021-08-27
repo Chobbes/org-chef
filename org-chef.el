@@ -59,6 +59,7 @@
 (require 'org-chef-wordpress)
 (require 'org-chef-taste)
 (require 'org-chef-bbc-food)
+(require 'org-chef-bbc-good-food)
 
 
 (defvar org-chef-fetch-workaround
@@ -75,7 +76,7 @@ for more information.")
 (defcustom org-chef-prefer-json-ld nil
   "Prefer JSON-LD extractor over custom extractor. This is for testing the JSON-LD functionality."
   :type 'boolean)
-  
+
 (defun org-chef-recipe-insert-org (recipe)
   "Insert a RECIPE as an ‘org-mode’ heading."
   (org-insert-heading)
@@ -132,6 +133,7 @@ for more information.")
    ((org-chef-match-url "finecooking.com" URL) (org-chef-fine-cooking-fetch URL))
    ((org-chef-match-url "taste.com.au" URL) (org-chef-taste-fetch URL))
    ((org-chef-match-url "bbc.co.uk/food/" URL) (org-chef-bbc-food-fetch URL))
+   ((org-chef-match-url "bbcgoodfood.com" URL) (org-chef-bbc-good-food-fetch URL))
    (t nil)))
 
 
