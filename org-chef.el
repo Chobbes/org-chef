@@ -63,6 +63,8 @@
 (require 'org-chef-bbc-good-food)
 (require 'org-chef-jamie-oliver)
 (require 'org-chef-recipetin-eats)
+(require 'org-chef-binging-with-babish)
+(require 'org-chef-basics-with-babish)
 
 
 (defvar org-chef-fetch-workaround
@@ -139,6 +141,8 @@ for more information.")
    ((org-chef-match-url "bbcgoodfood.com" URL) (org-chef-bbc-good-food-fetch URL))
    ((org-chef-match-url "jamieoliver.com" URL) (org-chef-jamie-oliver-fetch URL))
    ((org-chef-match-url "recipetineats.com" URL) (org-chef-recipetin-eats-fetch URL))
+   ((org-chef-match-url "basicswithbabish.co" URL) (org-chef-basics-with-babish-fetch URL))
+   ((org-chef-match-url "bingingwithbabish.com" URL) (org-chef-binging-with-babish-fetch URL))
    (t nil)))
 
 

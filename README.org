@@ -107,6 +107,8 @@
   - https://www.bbcgoodfood.com/
   - https://www.jamieoliver.com/
   - https://www.recipetineats.com/
+  - https://www.bingingwithbabish.com/
+  - https://basicswithbabish.co/
   - Any recipe site based on wordpress
   - Any recipe site with embedded [[https://developers.google.com/search/docs/advanced/structured-data/recipe][JSON-LD]]
 
