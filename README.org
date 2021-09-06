@@ -83,6 +83,12 @@
   You can also insert a recipe at point using the command
   ~org-chef-insert-recipe~.
 
+* Editing recipes
+
+  You can change the number of servings in a recipe using the
+  command ~org-chef-edit-servings~. This will automatically update
+  the ingredients list to match.
+
 * Supported Sites
 
   The following websites should support recipe extraction:

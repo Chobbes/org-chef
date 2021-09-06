@@ -41,6 +41,8 @@
 
 
 (require 'org-chef-utils)
+(require 'org-chef-edit)
+
 (require 'org-chef-24kitchen)
 (require 'org-chef-all-recipes)
 (require 'org-chef-json-ld)
