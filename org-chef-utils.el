@@ -97,5 +97,18 @@ This is a wrapper for url-retrieve-synchronously, which primarily serves to impl
   (mapconcat #'identity strings separator))
 
 
+;; Adapted from https://emacs.stackexchange.com/a/7150
+(defun org-chef-regexp-matches (regexp string)
+  "Get a list of all regexp matches in a string"
+  (save-match-data
+    (let ((pos 0) stop matches)
+      (while (and (not stop) (string-match regexp string pos))
+        (push (match-string 0 string) matches)
+        (when (= (match-end 0) pos)
+          (setq stop t))
+        (setq pos (match-end 0)))
+      (nreverse matches))))
+
+
 (provide 'org-chef-utils)
 ;;; org-chef-utils.el ends here
