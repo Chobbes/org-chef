@@ -47,6 +47,12 @@
   (seq-filter (lambda (x) (not (stringp x)))
                                   (dom-children dom)))
 
+(defun org-chef-render-html (text)
+  "Turn an html string into normal text."
+  (with-temp-buffer
+    (insert text)
+    (shr-render-buffer (current-buffer))
+    (buffer-string)))
 
 (defun org-chef-insert-org-list (lst &optional bullet)
   "Insert LST as an ‘org-mode’ plain list.
