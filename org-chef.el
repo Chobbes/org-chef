@@ -96,8 +96,6 @@ for more information.")
       nil
       `(plain-list nil ,(mapcar #'(lambda (x) `(item (:bullet "1. " :pre-blank 0) ,x)) list))))
 
-(org-element-interpret-data (org-chef-to-unordered-list '("")))
-
 (defun org-chef-recipe-to-org-element (recipe)
   "Convert a RECIPE into an `org-element` AST."
   `(headline (:title ,(cdr (assoc 'name recipe)) :level 1)
