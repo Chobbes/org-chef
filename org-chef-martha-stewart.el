@@ -89,17 +89,15 @@ This returns an alist with the following keys:
 - ready-in
 - directions
 - source-url"
-  (with-current-buffer (org-chef-url-retrieve-synchronously url)
-    (let  ((dom (libxml-parse-html-region (point-min) (point-max))))
-
-      `((name . ,(org-chef-martha-stewart-extract-name dom))
-        (ingredients . ,(org-chef-martha-stewart-extract-ingredients dom))
-        (servings . ,(org-chef-martha-stewart-extract-servings dom))
-        (prep-time . ,(org-chef-martha-stewart-extract-prep-time dom))
-        (cook-time . ,(org-chef-martha-stewart-extract-cook-time dom))
-        (ready-in . ,(org-chef-martha-stewart-extract-ready-in dom))
-        (directions . ,(org-chef-martha-stewart-extract-directions dom))
-        (source-url . ,url)))))
+  (let  ((dom (org-chef-url-retrieve-dom url)))
+    `((name . ,(org-chef-martha-stewart-extract-name dom))
+      (ingredients . ,(org-chef-martha-stewart-extract-ingredients dom))
+      (servings . ,(org-chef-martha-stewart-extract-servings dom))
+      (prep-time . ,(org-chef-martha-stewart-extract-prep-time dom))
+      (cook-time . ,(org-chef-martha-stewart-extract-cook-time dom))
+      (ready-in . ,(org-chef-martha-stewart-extract-ready-in dom))
+      (directions . ,(org-chef-martha-stewart-extract-directions dom))
+      (source-url . ,url))))
 
 
 (provide 'org-chef-martha-stewart)

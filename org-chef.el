@@ -41,6 +41,8 @@
 
 
 (require 'org-chef-utils)
+(require 'org-chef-edit)
+
 (require 'org-chef-24kitchen)
 (require 'org-chef-all-recipes)
 (require 'org-chef-json-ld)
@@ -48,6 +50,7 @@
 (require 'org-chef-simply-recipes)
 (require 'org-chef-martha-stewart)
 (require 'org-chef-cultures-for-health)
+(require 'org-chef-fine-cooking)
 (require 'org-chef-marmiton)
 (require 'org-chef-serious-eats)
 (require 'org-chef-reluctant-gourmet)
@@ -59,6 +62,11 @@
 (require 'org-chef-wordpress)
 (require 'org-chef-taste)
 (require 'org-chef-bbc-food)
+(require 'org-chef-bbc-good-food)
+(require 'org-chef-jamie-oliver)
+(require 'org-chef-recipetin-eats)
+(require 'org-chef-binging-with-babish)
+(require 'org-chef-basics-with-babish)
 
 
 (defvar org-chef-fetch-workaround
@@ -143,6 +151,11 @@ for more information.")
    ((org-chef-match-url "finecooking.com" URL) (org-chef-fine-cooking-fetch URL))
    ((org-chef-match-url "taste.com.au" URL) (org-chef-taste-fetch URL))
    ((org-chef-match-url "bbc.co.uk/food/" URL) (org-chef-bbc-food-fetch URL))
+   ((org-chef-match-url "bbcgoodfood.com" URL) (org-chef-bbc-good-food-fetch URL))
+   ((org-chef-match-url "jamieoliver.com" URL) (org-chef-jamie-oliver-fetch URL))
+   ((org-chef-match-url "recipetineats.com" URL) (org-chef-recipetin-eats-fetch URL))
+   ((org-chef-match-url "basicswithbabish.co" URL) (org-chef-basics-with-babish-fetch URL))
+   ((org-chef-match-url "bingingwithbabish.com" URL) (org-chef-binging-with-babish-fetch URL))
    (t nil)))
 
 
@@ -162,6 +175,7 @@ for more information.")
   (org-chef-recipe-insert-org (org-chef-fetch-recipe URL)))
 
 
+;;;###autoload
 (defun org-chef-get-recipe-from-url ()
   "Prompt for a recipe URL, and return the ‘org-mode’ string."
   (let ((URL (read-string "Recipe URL: ")))

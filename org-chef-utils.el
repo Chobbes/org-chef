@@ -36,6 +36,7 @@
 
 (require 'cl-macs)
 (require 'gnutls)
+(require 'dom)
 
 (defun org-chef-remove-empty-strings (lst)
   "Filter out any empty strings in a list of strings (LST)."
@@ -79,6 +80,40 @@ This is a wrapper for url-retrieve-synchronously, which primarily serves to impl
                 gnutls-algorithm-priority)))
 
     (url-retrieve-synchronously url)))
+
+
+(defun org-chef-string-to-dom (xml)
+  (with-temp-buffer
+    (insert xml)
+    (xml-parse-region (point-min) (point-max))))
+
+
+(defun org-chef-url-retrieve-dom (url)
+  "Fetch URL synchronously, and parse into a DOM structure"
+  (with-current-buffer (org-chef-url-retrieve-synchronously url)
+    (goto-char (point-min))
+    (search-forward "\n\n")             ; skip past HTTP headers
+    (let ((result (libxml-parse-html-region (point) (point-max))))
+      (kill-buffer)                     ; don't leak buffer
+      result)))
+
+
+(defun org-chef-join (strings separator)
+  "Joins a list of strings using a separator"
+  (mapconcat #'identity strings separator))
+
+
+;; Adapted from https://emacs.stackexchange.com/a/7150
+(defun org-chef-regexp-matches (regexp string)
+  "Get a list of all regexp matches in a string"
+  (save-match-data
+    (let ((pos 0) stop matches)
+      (while (and (not stop) (string-match regexp string pos))
+        (push (match-string 0 string) matches)
+        (when (= (match-end 0) pos)
+          (setq stop t))
+        (setq pos (match-end 0)))
+      (nreverse matches))))
 
 
 (provide 'org-chef-utils)
