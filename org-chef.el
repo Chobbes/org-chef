@@ -119,7 +119,7 @@ for more information.")
 (defun org-chef-recipe-insert-org (recipe)
   "Insert a RECIPE as an ‘org-mode’ heading."
   (insert
-   (org-chef-recipe-to-org (recipe))))
+   (org-chef-recipe-to-org recipe)))
 
 (defun org-chef-recipe-org-string (recipe)
   "Get an ‘org-mode’ heading string for a RECIPE."
