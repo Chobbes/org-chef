@@ -28,6 +28,7 @@
 
 ;;; Code:
 
+(require 'cl-lib)
 
 (defun org-chef-edit--do-replace (multiplier)
   "Replaces all numbers (in a variety of formats) in the region,
@@ -58,7 +59,7 @@ multiplying them all by MULTIPLIER"
 (defun org-chef-edit--parse-servings (string)
   "Finds all integers in STRING, and computes their mean"
   (let ((ints (mapcar #'string-to-number (org-chef-regexp-matches "[0-9]+" string))))
-    (/ (reduce #'+ ints) (length ints))))
+    (/ (cl-reduce #'+ ints) (length ints))))
 
 
 ;;;###autoload
