@@ -44,9 +44,12 @@
 (defun org-chef-recipetin-eats-extract-ingredients (dom)
   "Get the ingredients for a recipe from a RecipeTin Eats DOM."
   (mapcar #'(lambda (n)
-              (let ((notes (dom-text (dom-by-class n "wprm-recipe-ingredient-notes"))))
+              (let ((notes (dom-text (dom-by-class n "wprm-recipe-ingredient-notes")))
+                    (unit (dom-text (dom-by-class n "wprm-recipe-ingredient-unit"))))
                 (concat (dom-text (dom-by-class n "wprm-recipe-ingredient-amount"))
                         " "
+                        unit
+                        (if (string= unit "") "" " ")
                         (dom-text (dom-by-class n "wprm-recipe-ingredient-name"))
                         (if (or (zerop (length notes))
                                 (= (elt notes 0) ?,))
