@@ -29,6 +29,7 @@
 ;;; Code:
 
 (require 'cl-lib)
+(require 'org-chef-utils)
 
 (defun org-chef-edit--do-replace (multiplier)
   "Replaces all numbers (in a variety of formats) in the region,
