@@ -65,6 +65,7 @@
 (require 'org-chef-recipetin-eats)
 (require 'org-chef-binging-with-babish)
 (require 'org-chef-basics-with-babish)
+(require 'org-chef-kotikokki)
 
 
 (defvar org-chef-fetch-workaround
@@ -150,6 +151,7 @@ for more information.")
    ((org-chef-match-url "recipetineats.com" URL) (org-chef-recipetin-eats-fetch URL))
    ((org-chef-match-url "basicswithbabish.co" URL) (org-chef-basics-with-babish-fetch URL))
    ((org-chef-match-url "bingingwithbabish.com" URL) (org-chef-binging-with-babish-fetch URL))
+   ((org-chef-match-url "kotikokki.net" URL) (org-chef-kotikokki-fetch URL))
    (t nil)))
 
 
