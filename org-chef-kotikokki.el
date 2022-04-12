@@ -40,7 +40,7 @@
   (replace-regexp-in-string "</?p>" "" direction))
 
 (defun org-chef-kotikokki-fetch (url)
-  "Given a bbcgoodfood.com URL, retrieve the recipe information.
+  "Given a kotikokki.net URL, retrieve the recipe information.
 
 This returns an alist with the following keys:
 
