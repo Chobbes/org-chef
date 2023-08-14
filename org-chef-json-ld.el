@@ -88,8 +88,10 @@
   "Find the Recipe LD in JSON and return the hash. Return nil if not found."
   (cond ((and (json-alist-p json)
               (let ((type (cdr (assq '@type json))))
-                (and (stringp type)
-                     (string= type "Recipe"))))
+		(or (and (stringp type)
+			 (string= type "Recipe"))
+		    (and (sequencep type)
+			 (seq-contains type "Recipe")))))
          json)
         ((and (json-alist-p json)
               (assq '@graph json)
