@@ -50,7 +50,10 @@
 (defun org-chef-serious-eats-extract-ingredients (dom)
   "Get the ingredients for a recipe from an seriouseats DOM."
   (mapcar #'(lambda (n) (string-trim (dom-texts n)))
-          (dom-by-tag (dom-by-class dom "ingredient-list") 'li)))
+          (dom-by-tag (append 
+			(dom-by-class dom "structured-ingredients__list")
+			(dom-by-class dom "ingredient-list"))
+		      'li)))
 
 (defun org-chef-serious-eats-extract-servings (dom)
   "Get the number of servings for a recipe from an seriouseats DOM."
