@@ -1,4 +1,4 @@
-;;; org-chef.el --- Cookbook and recipe management with org-mode.  -*- lexical-binding: t; -*-
+;;; org-chef.el --- Cookbook and recipe management with org-mode  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2018 Calvin Beck
 
@@ -7,7 +7,7 @@
 ;; Created: 2018
 ;; Version: 0.1.3
 ;; Keywords: convenience, abbrev, outlines, org, food, recipes, cooking
-;; Package-Requires: ((org "0") (emacs "24"))
+;; Package-Requires: ((org "0") (emacs "24.3"))
 
 ;; Copyright 2018 Calvin Beck
 
@@ -43,23 +43,11 @@
 (require 'org-chef-utils)
 (require 'org-chef-edit)
 
-(require 'org-chef-24kitchen)
 (require 'org-chef-json-ld)
 (require 'org-chef-genius-kitchen)
-(require 'org-chef-simply-recipes)
-(require 'org-chef-martha-stewart)
-(require 'org-chef-cultures-for-health)
 (require 'org-chef-fine-cooking)
-(require 'org-chef-marmiton)
-(require 'org-chef-serious-eats)
-(require 'org-chef-reluctant-gourmet)
-(require 'org-chef-chef-koch)
-(require 'org-chef-nytimes)
-(require 'org-chef-saveur)
-(require 'org-chef-xiachufang)
 (require 'org-chef-wordpress)
 (require 'org-chef-taste)
-(require 'org-chef-bbc-food)
 (require 'org-chef-bbc-good-food)
 (require 'org-chef-jamie-oliver)
 (require 'org-chef-recipetin-eats)
@@ -79,8 +67,8 @@
 See https://github.com/magit/ghub/issues/81 and https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341
 for more information.")
 
-(defcustom org-chef-prefer-json-ld nil
-  "Prefer JSON-LD extractor over custom extractor. This is for testing the JSON-LD functionality."
+(defcustom org-chef-prefer-json-ld t
+  "Prefer JSON-LD extractor over custom extractor."
   :type 'boolean)
 
 (defun org-chef-to-unordered-list (list)
@@ -131,26 +119,16 @@ for more information.")
 (defun org-chef-fetch-recipe-specific-url (URL)
   "Look up a recipe based on a specific URL."
   (cond
-   ((org-chef-match-url "24kitchen.nl" URL) (org-chef-24kitchen-fetch URL))
    ((org-chef-match-url "geniuskitchen.com" URL) (org-chef-genius-kitchen-fetch URL))
-   ((org-chef-match-url "simplyrecipes.com" URL) (org-chef-simply-recipes-fetch URL))
-   ((org-chef-match-url "marthastewart.com" URL) (org-chef-martha-stewart-fetch URL))
-   ((org-chef-match-url "culturesforhealth.com" URL) (org-chef-cultures-for-health-fetch URL))
-   ((org-chef-match-url "marmiton.org" URL) (org-chef-marmiton-fetch URL))
-   ((org-chef-match-url "seriouseats.com" URL) (org-chef-serious-eats-fetch URL))
-   ((org-chef-match-url "reluctantgourmet.com" URL) (org-chef-reluctant-gourmet-fetch URL))
-   ((org-chef-match-url "chefkoch.de" URL) (org-chef-chef-koch-fetch URL))
-   ((org-chef-match-url "nytimes.com" URL) (org-chef-nytimes-fetch URL))
-   ((org-chef-match-url "saveur.com" URL) (org-chef-saveur-fetch URL))
-   ((org-chef-match-url "xiachufang.com" URL) (org-chef-xiachufang-fetch URL))
    ((org-chef-match-url "finecooking.com" URL) (org-chef-fine-cooking-fetch URL))
    ((org-chef-match-url "taste.com.au" URL) (org-chef-taste-fetch URL))
-   ((org-chef-match-url "bbc.co.uk/food/" URL) (org-chef-bbc-food-fetch URL))
    ((org-chef-match-url "bbcgoodfood.com" URL) (org-chef-bbc-good-food-fetch URL))
    ((org-chef-match-url "jamieoliver.com" URL) (org-chef-jamie-oliver-fetch URL))
    ((org-chef-match-url "recipetineats.com" URL) (org-chef-recipetin-eats-fetch URL))
    ((org-chef-match-url "basicswithbabish.co" URL) (org-chef-basics-with-babish-fetch URL))
+   ((org-chef-match-url "andrew-rea-zfrt.squarespace.com" URL) (org-chef-basics-with-babish-fetch URL))
    ((org-chef-match-url "bingingwithbabish.com" URL) (org-chef-binging-with-babish-fetch URL))
+   ((org-chef-match-url "andrew-rea-c8g3.squarespace.com" URL) (org-chef-binging-with-babish-fetch URL))
    ((org-chef-match-url "kotikokki.net" URL) (org-chef-kotikokki-fetch URL))
    (t nil)))
 

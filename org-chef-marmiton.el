@@ -41,7 +41,7 @@
 
 (defun org-chef-marmiton-sanitize (str)
   "Sanitize the STR by removing beginning/trailing spaces extracted from a marmiton dom."
-  (replace-regexp-in-string "^[ 	\r\n]*\\(.*[^ 	\r\n]\\)[ 	\r\n]*$" "\\1" str))
+  (replace-regexp-in-string "\n" " " (replace-regexp-in-string "^[ 	\r\n]*\\(.*[^ 	\r\n]\\)[ 	\r\n]*$" "\\1" str)))
 
 (defun org-chef-marmiton-extract-dom-text (dom)
   "Embedded the operation santize of dom-text from a marmiton DOM."
@@ -49,43 +49,44 @@
 
 (defun org-chef-marmiton-extract-name (dom)
   "Get the name of a recipe from a marmiton DOM."
-  (dom-text (car (dom-elements dom 'class "^main-title $"))))
-
-(defun org-chef-marmiton-extract-current-ingredient (dom)
-  "Extract element for the current ingredient from a marmiton DOM."
-  (concat
-   (org-chef-marmiton-extract-dom-text (dom-elements dom 'class "^recipe-ingredient-qt$"))
-   " "
-   (org-chef-marmiton-extract-dom-text (dom-elements dom 'class "^ingredient$"))))
+  (dom-text (dom-child-by-tag (dom-elements marmidom 'class "^main-title$") 'h1)))
 
 (defun org-chef-marmiton-extract-ingredients (dom)
   "Get the ingredients for a recipe from a marmiton DOM."
-  (mapcar 'org-chef-marmiton-extract-current-ingredient (dom-elements dom 'class "^recipe-ingredients__list__item$")))
+  (mapcar 'org-chef-marmiton-extract-dom-text (dom-elements dom 'class "^card-ingredient-content$")))
+
+(defun org-chef-marmiton-step-container-to-step (dom)
+  "Take a step DOM and turn it into a string for the directions."
+  (dom-text (dom-child-by-tag dom 'p)))
 
 (defun org-chef-marmiton-extract-directions (dom)
   "Get the directions for a recipe from a marmiton DOM."
+  (mapcar #'org-chef-marmiton-step-container-to-step
+          (dom-elements marmidom 'class "^recipe-step-list__container$")))
 
-  (mapcar (lambda (x) (org-chef-marmiton-extract-dom-text (cddr x)))
-          (dom-elements dom 'class "^recipe-preparation__list__item$")))
+(defun org-chef-marmiton-extract-time-details (dom)
+  "Get the time details DOM from a marmiton recipe."
+  (dom-elements dom 'class "time__details"))
 
-(defun org-chef-marmiton-extract-prep-time (dom)
-  "Get the preparation time for a recipe from a marmiton DOM."
+(defun org-chef-marmiton-prep-time-from-details (dom)
+  "Extract prep time from the time details DOM"
+  (dom-text (cadddr (dom-children (cadr (dom-children dom))))))
+
+(defun org-chef-marmiton-cook-time-from-details (dom)
+  "Extract cook time from the time details DOM"
+  (dom-text (cadddr (dom-children (cdr (cddddr (dom-children dom)))))))
+
+(defun org-chef-marmiton-extract-ready-in (dom)
+  "Extract the total time for a recipe from a marmiton DOM."
   (org-chef-marmiton-extract-dom-text
-   (dom-elements (dom-elements dom 'class "recipe-infos__timmings__preparation")
-		 'class "^recipe-infos__timmings__value$")))
-
-(defun org-chef-marmiton-extract-cook-time (dom)
-  "Extract the cooking time for a recipe from a marmiton DOM."
-  (org-chef-marmiton-extract-dom-text
-   (dom-elements (dom-elements dom 'class "recipe-infos__timmings__cooking")
-		 'class "^recipe-infos__timmings__value$")))
-
+   (dom-child-by-tag
+    (dom-elements (dom-elements marmidom 'class "recipe-preparation__time")
+	          'class "^time__total$")
+    'div)))
 
 (defun org-chef-marmiton-extract-servings (dom)
-  (dom-text (car (dom-elements dom 'class "^title-2 recipe-infos__quantity__value$"))))
-
-
-
+  (dom-text (car (dom-elements dom 'class "^recipe-ingredients__qt-counter__value_container"))))
+(dom-elements marmidom 'class "recipe-ingredients__qt-counter__value_container")
 (defun org-chef-marmiton-from-dom (dom)
   "Given a marmiton.org DOM, retrieve the recipe information.
 
@@ -98,13 +99,15 @@ This returns an alist with the following keys:
 - cook-time
 - ready-in
 - directions"
-  `((ingredients . ,(org-chef-marmiton-extract-ingredients dom))
-    (name . ,(org-chef-marmiton-extract-name dom))
-    (servings . ,(org-chef-marmiton-extract-servings dom))
-    (prep-time . ,(org-chef-marmiton-extract-prep-time dom))
-    (cook-time . ,(org-chef-marmiton-extract-cook-time dom))
-    (ready-in . nil)
-    (directions . ,(org-chef-marmiton-extract-directions dom))))
+  (let
+      ((time-details (org-chef-marmiton-extract-time-details dom)))
+    `((ingredients . ,(org-chef-marmiton-extract-ingredients dom))
+      (name . ,(org-chef-marmiton-extract-name dom))
+      (servings . ,(org-chef-marmiton-extract-servings dom))
+      (prep-time . ,(org-chef-marmiton-prep-time-from-details time-details))
+      (cook-time . ,(org-chef-marmiton-cook-time-from-details time-details))
+      (ready-in . ,(org-chef-marmiton-extract-ready-in dom))
+      (directions . ,(org-chef-marmiton-extract-directions dom)))))
 
 
 (defun org-chef-marmiton-fetch (url)
