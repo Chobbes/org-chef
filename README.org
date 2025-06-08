@@ -33,6 +33,9 @@
           '(("c" "Cookbook" entry (file "~/org/cookbook.org")
              "%(org-chef-get-recipe-from-url)"
              :empty-lines 1)
+            ("z" "Protocol Cookbook" entry (file "~/org/cookbook.org")
+             "%(org-chef-get-recipe-string-from-url \"%:link\")"
+             :empty-lines 1)
             ("m" "Manual Cookbook" entry (file "~/org/cookbook.org")
              "* %^{Recipe title: }\n  :PROPERTIES:\n  :source-url:\n  :servings:\n  :prep-time:\n  :cook-time:\n  :ready-in:\n  :END:\n** Ingredients\n   %?\n** Directions\n\n")))
   #+END_SRC
@@ -75,8 +78,35 @@
        6. If grilling, place patties on foil, and grill about 8 minutes on each side. If baking, place patties on baking sheet, and bake about 10 minutes on each side.
   #+END_SRC
 
-  Additionally, there is a capture template in there for manually
-  entering a recipe, if you so desire!
+  There is also a capture template in there for manually entering a
+  recipe, if you so desire!
+
+  Finally, there is a capture template for org-protocol...
+
+* Org-Protocol
+
+[[https://orgmode.org/worg/org-contrib/org-protocol.html][Org-Protocol]] can be used to capture recipes using bookmarklets in web
+browsers. The following capture template should work:
+
+#+begin_src lisp
+("z" "Protocol Cookbook" entry (file "~/org/cookbook.org")
+             "%(org-chef-get-recipe-string-from-url \"%:link\")"
+             :empty-lines 1)
+#+end_src
+
+With this template registered you can add the following JavaScript as
+a URL in a bookmark in your web browser (preferably in your bookmarks
+toolbar). Just click the bookmark when you're on a site with a recipe
+and it will be sent to emacs!
+
+#+begin_src javascript
+  javascript:location.href='org-protocol://capture?url='+encodeURIComponent(location.href)+'&template=z'
+#+end_src
+
+Note that this bookmarklet must specify the capture template's
+key. Here "z" was used as the key.
+
+You will probably need some additional setup for org-protocol itself :).
 
 * Inserting at Point
 

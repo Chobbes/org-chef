@@ -148,13 +148,16 @@ for more information.")
   (interactive "sRecipe URL: ")
   (org-chef-recipe-insert-org (org-chef-fetch-recipe URL)))
 
+;;;###autoload
+(defun org-chef-get-recipe-string-from-url (URL)
+  "Prompt for a recipe URL, and return the ‘org-mode’ string."
+  (org-chef-recipe-org-string (org-chef-fetch-recipe URL)))
 
 ;;;###autoload
 (defun org-chef-get-recipe-from-url ()
   "Prompt for a recipe URL, and return the ‘org-mode’ string."
   (let ((URL (read-string "Recipe URL: ")))
-    (org-chef-recipe-org-string (org-chef-fetch-recipe URL))))
-
+    (org-chef-get-recipe-string-from-url URL)))
 
 (provide 'org-chef)
 ;;; org-chef.el ends here
